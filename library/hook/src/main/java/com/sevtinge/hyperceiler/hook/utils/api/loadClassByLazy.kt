@@ -18,8 +18,8 @@
 */
 package com.sevtinge.hyperceiler.hook.utils.api
 
-import com.github.kyuubiran.ezxhelper.ClassUtils.loadClass
-import com.github.kyuubiran.ezxhelper.ClassUtils.loadClassOrNull
+import io.github.kyuubiran.ezxhelper.core.util.ClassUtil.loadClass
+import io.github.kyuubiran.ezxhelper.core.util.ClassUtil.loadClassOrNull
 
 // by StarVoyager
 object LazyClass {
@@ -71,9 +71,6 @@ object LazyClass {
         loadClass("com.android.systemui.statusbar.views.MiuiStatusBarClock")
     }
 
-    val StrongToast by lazy {
-        loadClassOrNull("com.android.systemui.toast.MIUIStrongToast")
-    }
 
     val NewStrongToast by lazy {
         loadClassOrNull("com.miui.toast.MIUIStrongToast")

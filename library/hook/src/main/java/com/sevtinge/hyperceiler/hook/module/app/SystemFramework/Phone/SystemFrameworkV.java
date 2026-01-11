@@ -20,71 +20,71 @@ package com.sevtinge.hyperceiler.hook.module.app.SystemFramework.Phone;
 
 import com.hchen.database.HookBase;
 import com.sevtinge.hyperceiler.hook.module.base.BaseModule;
-import com.sevtinge.hyperceiler.hook.module.hook.GlobalActions;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.AllowAutoStart;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.AllowDisableProtectedPackage;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.AllowUntrustedTouch;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.AllowUntrustedTouchForU;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.AntiQues;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.AppLinkVerify;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.AutoEffectSwitchForSystem;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.BackgroundBlur;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.BypassUnknownSourcesRestrictions;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.CleanOpenMenu;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.CleanProcessTextMenu;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.CleanShareMenu;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.ClipboardWhitelist;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.DeleteOnPostNotification;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.DisableCleaner;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.DisableFreeformBlackList;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.DisableGestureMonitor;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.DisableLowApiCheckForU;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.DisableMiuiLite;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.DisableMiuiWatermark;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.DisablePersistent;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.DisablePinVerifyPer72h;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.DisableThermal;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.DisableVerifyCanBeDisabled;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.EffectBinderProxy;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.display.EnhanceRecentsVisibility;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.FlagSecure;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.FreeformBubble;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.HookEntry;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.LinkTurboToast;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.MultiFreeFormSupported;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.PackagePermissions;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.PstedClipboard;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.QuickScreenshot;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.RemoveSmallWindowRestrictions;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.ScreenRotation;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.SpeedInstall;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.StickyFloatingWindows;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.SystemLockApp;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.ThermalBrightness;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.UseAndroidPackageInstaller;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.UseOriginalAnimation;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.volume.VolumeDefaultStream;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.volume.VolumeDisableSafe;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.volume.VolumeFirstPress;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.volume.VolumeMediaSteps;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.volume.VolumeSteps;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.corepatch.AllowUpdateSystemApp;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.corepatch.BypassIsolationViolation;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.corepatch.BypassSignCheckForT;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.display.AllDarkMode;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.display.ThemeProvider;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.display.UseAOSPScreenShot;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.freeform.FreeFormCount;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.freeform.OpenAppInFreeForm;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.freeform.UnForegroundPin;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.network.DualNRSupport;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.network.DualSASupport;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.network.N1Band;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.network.N28Band;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.network.N5N8Band;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.BypassForceDownloadui;
-import com.sevtinge.hyperceiler.hook.module.hook.systemframework.BypassForceMiAppStore;
-import com.sevtinge.hyperceiler.hook.module.hook.various.NoAccessDeviceLogsRequest;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.AllowAutoStart;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.AllowDisableProtectedPackage;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.AllowManageAllNotifications;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.AllowUntrustedTouch;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.AllowUntrustedTouchForU;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.AntiQues;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.AppLinkVerify;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.AutoEffectSwitchForSystem;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.BackgroundBlur;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.BypassForceDownloadui;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.BypassForceMiAppStore;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.BypassUnknownSourcesRestrictions;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.CleanOpenMenu;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.CleanProcessTextMenu;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.CleanShareMenu;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.ClipboardWhitelist;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.DeleteOnPostNotification;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.DisableCleaner;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.DisableGestureMonitor;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.DisableLowApiCheckForU;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.DisableMiuiLite;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.DisableMiuiWatermark;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.DisablePersistent;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.DisablePinVerifyPer72h;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.DisableThermal;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.DisableVerifyCanBeDisabled;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.EffectBinderProxy;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.FlagSecure;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.FreeformBubble;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.HookEntry;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.LinkTurboToast;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.NoAccessDeviceLogsRequest;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.PackagePermissions;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.PstedClipboard;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.QuickScreenshot;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.RemoveSmallWindowRestrictions;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.ScreenRotation;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.SpeedInstall;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.SystemLockApp;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.ThermalBrightness;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.UseAndroidPackageInstaller;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.corepatch.AllowUpdateSystemApp;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.corepatch.BypassIsolationViolation;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.corepatch.BypassSignCheckForT;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.display.AllDarkMode;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.display.DisplayCutout;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.display.EnhanceRecentsVisibility;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.display.ThemeProvider;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.display.UseAOSPScreenShot;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.freeform.DisableFreeformBlackList;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.freeform.FreeFormCount;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.freeform.OpenAppInFreeForm;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.freeform.StickyFloatingWindows;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.freeform.UnForegroundPin;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.network.DualNRSupport;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.network.DualSASupport;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.network.N1Band;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.network.N28Band;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.network.N5N8Band;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.volume.VolumeDefaultStream;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.volume.VolumeDisableSafe;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.volume.VolumeFirstPress;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.volume.VolumeMediaSteps;
+import com.sevtinge.hyperceiler.hook.module.rules.systemframework.volume.VolumeSteps;
+import com.sevtinge.hyperceiler.hook.module.skip.GlobalActions;
 
 @HookBase(targetPackage = "android", isPad = 2, targetSdk = 35)
 public class SystemFrameworkV extends BaseModule {
@@ -100,13 +100,12 @@ public class SystemFrameworkV extends BaseModule {
         initHook(new DisableFreeformBlackList(), mPrefsMap.getBoolean("system_framework_disable_freeform_blacklist"));
         initHook(RemoveSmallWindowRestrictions.INSTANCE, mPrefsMap.getBoolean("system_framework_disable_freeform_blacklist"));
         initHook(new StickyFloatingWindows(), mPrefsMap.getBoolean("system_framework_freeform_sticky"));
-        initHook(MultiFreeFormSupported.INSTANCE, mPrefsMap.getBoolean("system_framework_freeform_recents_to_small_freeform"));
         initHook(new OpenAppInFreeForm(), mPrefsMap.getBoolean("system_framework_freeform_jump"));
         initHook(new UnForegroundPin(), mPrefsMap.getBoolean("system_framework_freeform_foreground_pin"));
         // initHook(new OpenAppInFreeForm(), mPrefsMap.getBoolean("system_framework_freeform_jump"));
 
         // 音量
-        initHook(new VolumeDefaultStream(), true);
+        initHook(new VolumeDefaultStream(), mPrefsMap.getStringAsInt("system_framework_default_volume_stream", 0) != 0);
         initHook(new VolumeFirstPress(), mPrefsMap.getBoolean("system_framework_volume_first_press"));
         initHook(new VolumeSteps(), mPrefsMap.getInt("system_framework_volume_steps", 0) > 0);
         initHook(new VolumeMediaSteps(), mPrefsMap.getBoolean("system_framework_volume_media_steps_enable"));
@@ -122,7 +121,6 @@ public class SystemFrameworkV extends BaseModule {
         initHook(new AllowUntrustedTouchForU(), mPrefsMap.getBoolean("system_framework_allow_untrusted_touch"));
         initHook(new FlagSecure(), mPrefsMap.getBoolean("system_other_flag_secure"));
         initHook(new AppLinkVerify(), mPrefsMap.getBoolean("system_framework_disable_app_link_verify"));
-        initHook(new UseOriginalAnimation(), mPrefsMap.getBoolean("system_framework_other_use_original_animation"));
         initHook(new SpeedInstall(), mPrefsMap.getBoolean("system_framework_other_speed_install"));
         initHook(DeleteOnPostNotification.INSTANCE, mPrefsMap.getBoolean("system_other_delete_on_post_notification"));
         initHook(NoAccessDeviceLogsRequest.INSTANCE, mPrefsMap.getBoolean("various_disable_access_device_logs"));
@@ -132,13 +130,14 @@ public class SystemFrameworkV extends BaseModule {
         initHook(new AllowDisableProtectedPackage(), mPrefsMap.getBoolean("system_framework_allow_disable_protected_package"));
         // 允许应用后台读取剪切板
         initHook(new ClipboardWhitelist(), mPrefsMap.getBoolean("system_framework_clipboard_whitelist"));
-
+        initHook(new AllowManageAllNotifications(), mPrefsMap.getBoolean("system_framework_allow_manage_all_notifications"));
         initHook(new BypassUnknownSourcesRestrictions(), mPrefsMap.getBoolean("system_framework_bypass_unknown_sources_restrictions"));
 
         initHook(new BypassForceMiAppStore(), mPrefsMap.getBoolean("system_framework_bypass_force_mi_appstore") || mPrefsMap.getBoolean("system_framework_market_use_detailmini"));
         initHook(new BypassForceDownloadui(), mPrefsMap.getBoolean("system_framework_bypass_force_downloadui"));
 
         // 显示
+        initHook(DisplayCutout.INSTANCE, mPrefsMap.getBoolean("system_ui_display_hide_cutout_enable"));
         initHook(new BackgroundBlur(), mPrefsMap.getBoolean("system_framework_background_blur_supported"));
         initHook(EnhanceRecentsVisibility.INSTANCE, mPrefsMap.getBoolean("system_framework_enhance_recents_visibility"));
         initHook(UseAOSPScreenShot.INSTANCE, mPrefsMap.getBoolean("system_ui_display_use_aosp_screenshot_enable"));
@@ -146,9 +145,14 @@ public class SystemFrameworkV extends BaseModule {
         initHook(new ThemeProvider(), mPrefsMap.getBoolean("system_framework_allow_third_theme"));
 
         // 核心破解
-        initHook(BypassSignCheckForT.INSTANCE, mPrefsMap.getBoolean("system_framework_core_patch_auth_creak") || mPrefsMap.getBoolean("system_framework_core_patch_disable_integrity"));
+        initHook(BypassSignCheckForT.INSTANCE,
+            (mPrefsMap.getBoolean("system_framework_core_patch_auth_creak") || mPrefsMap.getBoolean("system_framework_core_patch_disable_integrity"))
+                && mPrefsMap.getBoolean("system_framework_core_patch_enable")
+        );
         initHook(new BypassIsolationViolation(), mPrefsMap.getBoolean("system_framework_core_patch_bypass_isolation_violation"));
         initHook(new AllowUpdateSystemApp(), mPrefsMap.getBoolean("system_framework_core_patch_allow_update_system_app"));
+        initHook(new DisableLowApiCheckForU(), mPrefsMap.getBoolean("system_framework_disable_low_api_check"));
+        initHook(new DisablePersistent(), mPrefsMap.getBoolean("system_framework_disable_persistent"));
 
         // 网络
         initHook(DualNRSupport.INSTANCE, mPrefsMap.getBoolean("phone_double_5g_nr"));
@@ -157,9 +161,8 @@ public class SystemFrameworkV extends BaseModule {
         initHook(N5N8Band.INSTANCE, mPrefsMap.getBoolean("phone_n5_n8"));
         initHook(N28Band.INSTANCE, mPrefsMap.getBoolean("phone_n28"));
 
-        // Other
         initHook(new PackagePermissions(), true);
-        initHook(new GlobalActions(), mLoadPackageParam.processName.equals("android"));
+        initHook(new GlobalActions(), true);
         initHook(new ThermalBrightness(), mPrefsMap.getBoolean("system_framework_other_thermal_brightness"));
         initHook(DisableCleaner.INSTANCE, mPrefsMap.getBoolean("system_framework_other_disable_cleaner"));
         initHook(DisableGestureMonitor.INSTANCE, mPrefsMap.getBoolean("system_framework_other_disable_gesture_monitor"));
@@ -170,11 +173,10 @@ public class SystemFrameworkV extends BaseModule {
         initHook(new QuickScreenshot(), mPrefsMap.getBoolean("system_framework_quick_screenshot"));
         initHook(new LinkTurboToast(), mPrefsMap.getBoolean("system_framework_disable_link_turbo_toast"));
 
-        initHook(new DisableLowApiCheckForU(), mPrefsMap.getBoolean("system_framework_disable_low_api_check"));
-        initHook(new DisablePersistent(), mPrefsMap.getBoolean("system_framework_disable_persistent"));
-
-        initHook(new EffectBinderProxy(), mPrefsMap.getBoolean("misound_bluetooth"));
-        initHook(new AutoEffectSwitchForSystem(), mPrefsMap.getBoolean("misound_bluetooth"));
+        if (mPrefsMap.getBoolean("misound_bluetooth")) {
+            initHook(new EffectBinderProxy());
+            initHook(new AutoEffectSwitchForSystem());
+        }
     }
 
 }

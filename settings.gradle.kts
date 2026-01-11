@@ -1,4 +1,5 @@
 @file:Suppress("UnstableApiUsage")
+
 var gprUser = System.getenv("GIT_ACTOR") ?:""
 var gprKey = System.getenv("GIT_TOKEN") ?: ""
 
@@ -10,11 +11,11 @@ if (gprUser.isEmpty() || gprKey.isEmpty()) {
             gprInfoFile.inputStream().use { load(it) }
         }
 
-        // 在构建时请在 signing.properties 中添加 gpr.user（github 用户名）和 gpr.key（GitHub 个人令牌密钥）
+        // 在构建时请在 signing.properties 中添加 gpr.user（GitHub 用户名）和 gpr.key（GitHub 个人令牌密钥）
         // 提交时请勿提交以上字段，以免个人账号泄露
         //
-        // When constructing, add gpr.user (Github user name) and gpr.key (Github personal token key) to signing.propertiess.
-        // Do not submit the above fields when submitted to avoid leakage of personal accounts
+        // When building, add gpr.user (GitHub username) and gpr.key (GitHub personal access token) to signing.properties.
+        // Do not commit these fields to version control to avoid leaking personal account information.
         gprUser = gprInfo.getProperty("gpr.user") ?: ""
         gprKey = gprInfo.getProperty("gpr.key") ?: ""
 
@@ -35,8 +36,7 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-    repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
-
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
@@ -55,4 +55,9 @@ dependencyResolutionManagement {
 
 rootProject.name = "HyperCeiler"
 include("app")
-include(":library:common-ui", ":library:hook", "library:processor", "library:hidden-api")
+include(":library:hook")
+include(":library:core")
+include(":library:provision")
+include(":library:common")
+include(":library:processor")
+include(":library:hidden-api")

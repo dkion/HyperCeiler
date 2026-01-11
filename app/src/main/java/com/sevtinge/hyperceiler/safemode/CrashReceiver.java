@@ -1,22 +1,21 @@
 /*
  * This file is part of HyperCeiler.
- *
+
  * HyperCeiler is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License.
- *
+
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- *
+
  * Copyright (C) 2023-2025 HyperCeiler Contributions
  */
-
 package com.sevtinge.hyperceiler.safemode;
 
 import android.content.BroadcastReceiver;
@@ -48,8 +47,7 @@ public class CrashReceiver extends BroadcastReceiver {
             throwFileName = intent.getStringExtra("key_throwFileName");
             throwLineNumber = intent.getIntExtra("key_throwLineNumber", -1);
             throwMethodName = intent.getStringExtra("key_throwMethodName");
-            ShellInit.getShell().run("setprop persist.hyperceiler.crash.report " + "\"" + report + "\"").sync();
-
+            ShellInit.getShell().run("setprop persist.service.hyperceiler.crash.report " + "\"" + report + "\"").sync();
 
             Intent intent1 = getIntent(context, abbr);
             intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

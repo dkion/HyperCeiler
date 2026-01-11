@@ -20,23 +20,24 @@ package com.sevtinge.hyperceiler.hook.module.app;
 
 import com.hchen.database.HookBase;
 import com.sevtinge.hyperceiler.hook.module.base.BaseModule;
-import com.sevtinge.hyperceiler.hook.module.hook.gallery.ChangeBackupServer;
-import com.sevtinge.hyperceiler.hook.module.hook.gallery.EnableHdrEnhance;
-import com.sevtinge.hyperceiler.hook.module.hook.gallery.EnableIdPhoto;
-import com.sevtinge.hyperceiler.hook.module.hook.gallery.EnableMagicMatting;
-import com.sevtinge.hyperceiler.hook.module.hook.gallery.EnableOcr;
-import com.sevtinge.hyperceiler.hook.module.hook.gallery.EnableOcrForm;
-import com.sevtinge.hyperceiler.hook.module.hook.gallery.EnablePdf;
-import com.sevtinge.hyperceiler.hook.module.hook.gallery.EnablePhotoMovie;
-import com.sevtinge.hyperceiler.hook.module.hook.gallery.EnableVideoPost;
-import com.sevtinge.hyperceiler.hook.module.hook.gallery.UnPrivacyWatermark;
-import com.sevtinge.hyperceiler.hook.module.hook.various.UnlockSuperClipboard;
+import com.sevtinge.hyperceiler.hook.module.rules.gallery.ChangeBackupServer;
+import com.sevtinge.hyperceiler.hook.module.rules.gallery.EnableHdrEnhance;
+import com.sevtinge.hyperceiler.hook.module.rules.gallery.EnableIdPhoto;
+import com.sevtinge.hyperceiler.hook.module.rules.gallery.EnableMagicMatting;
+import com.sevtinge.hyperceiler.hook.module.rules.gallery.EnableOcr;
+import com.sevtinge.hyperceiler.hook.module.rules.gallery.EnableOcrForm;
+import com.sevtinge.hyperceiler.hook.module.rules.gallery.EnablePdf;
+import com.sevtinge.hyperceiler.hook.module.rules.gallery.EnablePhotoMovie;
+import com.sevtinge.hyperceiler.hook.module.rules.gallery.EnableVideoPost;
+import com.sevtinge.hyperceiler.hook.module.rules.gallery.LongerTrashbinTime;
+import com.sevtinge.hyperceiler.hook.module.rules.gallery.UnPrivacyWatermark;
 
 @HookBase(targetPackage = "com.miui.gallery")
 public class Gallery extends BaseModule {
 
     @Override
     public void handleLoadPackage() {
+        initHook(new LongerTrashbinTime(), mPrefsMap.getBoolean("gallery_longer_trashbin_time"));
         initHook(new UnPrivacyWatermark(), mPrefsMap.getBoolean("gallery_enable_un_privacy_watermark"));
         initHook(new EnableHdrEnhance(), mPrefsMap.getBoolean("gallery_enable_hdr_enhanced"));
         initHook(new EnablePdf(), mPrefsMap.getBoolean("gallery_enable_pdf"));
@@ -48,6 +49,5 @@ public class Gallery extends BaseModule {
         initHook(new EnableOcr(), mPrefsMap.getBoolean("gallery_enable_ocr"));
         initHook(new EnableOcrForm(), mPrefsMap.getBoolean("gallery_enable_ocr_form"));
         initHook(new ChangeBackupServer(), mPrefsMap.getStringAsInt("gallery_backup_server", 0) != 0);
-        initHook(UnlockSuperClipboard.INSTANCE, mPrefsMap.getStringAsInt("various_super_clipboard_e", 0) != 0);
     }
 }

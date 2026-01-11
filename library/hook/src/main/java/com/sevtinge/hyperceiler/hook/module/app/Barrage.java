@@ -20,14 +20,18 @@ package com.sevtinge.hyperceiler.hook.module.app;
 
 import com.hchen.database.HookBase;
 import com.sevtinge.hyperceiler.hook.module.base.BaseModule;
-import com.sevtinge.hyperceiler.hook.module.hook.barrage.AnyBarrage;
-import com.sevtinge.hyperceiler.hook.module.hook.barrage.CustomBarrageLength;
+import com.sevtinge.hyperceiler.hook.module.rules.barrage.AnyBarrage;
+import com.sevtinge.hyperceiler.hook.module.rules.barrage.BarrageNotTouchable;
+import com.sevtinge.hyperceiler.hook.module.rules.barrage.CustomBarrageLength;
+import com.sevtinge.hyperceiler.hook.module.rules.barrage.GlobalBarrage;
 
 @HookBase(targetPackage = "com.xiaomi.barrage")
 public class Barrage extends BaseModule {
     @Override
     public void handleLoadPackage() {
         initHook(AnyBarrage.INSTANCE, mPrefsMap.getBoolean("barrage_any_barrage"));
+        initHook(BarrageNotTouchable.INSTANCE, mPrefsMap.getBoolean("barrage_not_touchable"));
+        initHook(GlobalBarrage.INSTANCE, mPrefsMap.getBoolean("barrage_global_enable"));
         initHook(CustomBarrageLength.INSTANCE, mPrefsMap.getInt("barrage_custom_barrage_length", 36) != 36);
     }
 }

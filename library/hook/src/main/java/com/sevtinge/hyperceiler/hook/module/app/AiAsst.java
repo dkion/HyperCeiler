@@ -20,9 +20,9 @@ package com.sevtinge.hyperceiler.hook.module.app;
 
 import com.hchen.database.HookBase;
 import com.sevtinge.hyperceiler.hook.module.base.BaseModule;
-import com.sevtinge.hyperceiler.hook.module.hook.aiasst.DisableWatermark;
-import com.sevtinge.hyperceiler.hook.module.hook.aiasst.NewAiCaptions;
-import com.sevtinge.hyperceiler.hook.module.hook.aiasst.UnlockAllCaptions;
+import com.sevtinge.hyperceiler.hook.module.rules.aiasst.NewAiCaptions;
+import com.sevtinge.hyperceiler.hook.module.rules.aiasst.UnlockAllCaptions;
+import com.sevtinge.hyperceiler.hook.module.rules.aiasst.UnlockSplitTranslation;
 
 @HookBase(targetPackage = "com.xiaomi.aiasst.vision")
 public class AiAsst extends BaseModule {
@@ -30,7 +30,7 @@ public class AiAsst extends BaseModule {
     @Override
     public void handleLoadPackage() {
         initHook(NewAiCaptions.INSTANCE, mPrefsMap.getBoolean("aiasst_ai_captions"));
-        initHook(new DisableWatermark(), mPrefsMap.getBoolean("aiasst_disable_watermark"));
         initHook(UnlockAllCaptions.INSTANCE, mPrefsMap.getBoolean("aiasst_all_captions"));
+        initHook(UnlockSplitTranslation.INSTANCE, mPrefsMap.getBoolean("aiasst_unlock_split_screen_translation"));
     }
 }

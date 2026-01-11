@@ -1,21 +1,21 @@
 /*
-  * This file is part of HyperCeiler.
+ * This file is part of HyperCeiler.
 
-  * HyperCeiler is free software: you can redistribute it and/or modify
-  * it under the terms of the GNU Affero General Public License as
-  * published by the Free Software Foundation, either version 3 of the
-  * License.
+ * HyperCeiler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License.
 
-  * This program is distributed in the hope that it will be useful,
-  * but WITHOUT ANY WARRANTY; without even the implied warranty of
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  * GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
 
-  * You should have received a copy of the GNU Affero General Public License
-  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
-*/
+ * Copyright (C) 2023-2025 HyperCeiler Contributions
+ */
 package com.sevtinge.hyperceiler.hook.utils;
 
 import android.annotation.SuppressLint;
@@ -74,6 +74,9 @@ public class BackupUtils {
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
         JSONObject jsonObject = new JSONObject();
         for (Map.Entry<String, ?> entry : PrefsUtils.mSharedPreferences.getAll().entrySet()) {
+            if ("prefs_key_allow_hook".equals(entry.getKey())) {
+                continue;
+            }
             jsonObject.put(entry.getKey(), entry.getValue());
         }
         bufferedWriter.write(jsonObject.toString());
@@ -96,6 +99,9 @@ public class BackupUtils {
         Iterator<String> keys = jsonObject.keys();
         while (keys.hasNext()) {
             String key = keys.next();
+            if ("prefs_key_allow_hook".equals(key)) {
+                continue;
+            }
             Object value = jsonObject.get(key);
             // https://stackoverflow.com/a/78608931
             //noinspection IfCanBeSwitch

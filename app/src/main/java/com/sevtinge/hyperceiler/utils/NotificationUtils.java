@@ -1,22 +1,21 @@
 /*
  * This file is part of HyperCeiler.
- *
+
  * HyperCeiler is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License.
- *
+
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- *
+
  * Copyright (C) 2023-2025 HyperCeiler Contributions
  */
-
 package com.sevtinge.hyperceiler.utils;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
@@ -56,8 +55,8 @@ public class NotificationUtils {
 
     public static Notification getAppCrashNotification(Context context, String packageName, Intent intent) {
         createAppCrashChannel(context);
-        String title = context.getResources().getString(com.sevtinge.hyperceiler.ui.R.string.notification_title_message_emergency_crash);
-        String content = context.getResources().getString(com.sevtinge.hyperceiler.ui.R.string.notification_content_message);
+        String title = context.getResources().getString(R.string.notification_title_message_emergency_crash);
+        String content = context.getResources().getString(R.string.notification_content_message);
 
         intent.putExtra("notification_click", true);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -85,7 +84,7 @@ public class NotificationUtils {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID_APP_CRASH);
         builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setColor(ContextCompat.getColor(context, com.sevtinge.hyperceiler.ui.R.color.black));
+        builder.setColor(ContextCompat.getColor(context, com.sevtinge.hyperceiler.core.R.color.textview_black));
         builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
         builder.setContentTitle(title);
         builder.setContentText(content);
@@ -97,7 +96,7 @@ public class NotificationUtils {
         builder.setContentIntent(pendingIntent);
 
         builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        builder.addAction(R.mipmap.ic_launcher, context.getString(com.sevtinge.hyperceiler.ui.R.string.notification_view), pendingIntent);
+        builder.addAction(R.mipmap.ic_launcher, context.getString(R.string.notification_view), pendingIntent);
 
         builder.setGroup(GROUP_KEY_WORK_EMAIL);
 
@@ -187,15 +186,15 @@ public class NotificationUtils {
     }
 
     private static void createAppCrashChannel(Context context) {
-        String name = context.getResources().getString(com.sevtinge.hyperceiler.ui.R.string.notification_channel_app_crash_name);
+        String name = context.getResources().getString(R.string.notification_channel_app_crash_name);
         createNotificationChannel(context, CHANNEL_ID_APP_CRASH, name, "", NotificationManager.IMPORTANCE_HIGH);
     }
 
-    //创建渠道并设置重要性
+    // 创建渠道并设置重要性
     public static void createNotificationChannel(Context context, String id, CharSequence name, String description, int importance) {
         NotificationManager manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is not in the Support Library.
+        // the NotificationChannel class is not available in the Support Library.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(id, name, importance);
             if (!TextUtils.isEmpty(description)) channel.setDescription(description);

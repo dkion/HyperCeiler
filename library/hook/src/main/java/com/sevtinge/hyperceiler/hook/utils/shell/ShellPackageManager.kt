@@ -1,15 +1,31 @@
+/*
+ * This file is part of HyperCeiler.
+
+ * HyperCeiler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+ * Copyright (C) 2023-2025 HyperCeiler Contributions
+ */
 package com.sevtinge.hyperceiler.hook.utils.shell
 
 import android.content.ComponentName
-import android.util.Log
-import com.sevtinge.hyperceiler.hook.BuildConfig
+import com.sevtinge.hyperceiler.hook.utils.api.ProjectApi.isDebug
+import com.sevtinge.hyperceiler.hook.utils.log.AndroidLogUtils
 
 @Suppress("unused")
 object ShellPackageManager {
     private const val TAG = "ShellPackageManager"
     private const val PM = "pm"
-
-    private val DEBUG = BuildConfig.DEBUG
 
     @JvmStatic
     fun enable(packageName: String): Boolean {
@@ -41,8 +57,8 @@ object ShellPackageManager {
         }
 
         val commandResult = ShellUtils.execCommand("$PM $status $packageName", true)
-        if (DEBUG) {
-            Log.d(TAG, commandResult.toString())
+        if (isDebug()) {
+            AndroidLogUtils.deLogI(TAG, commandResult.toString())
         }
         return commandResult.result == 0
     }

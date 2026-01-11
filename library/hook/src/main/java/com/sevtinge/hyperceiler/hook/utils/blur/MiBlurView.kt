@@ -1,6 +1,6 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
- *
+
  * This file is part of XiaomiHelper project
  * Copyright (C) 2023 HowieHChen, howie.dev@outlook.com
 
@@ -19,18 +19,21 @@
  */
 package com.sevtinge.hyperceiler.hook.utils.blur
 
-import android.animation.*
-import android.content.*
-import android.graphics.*
-import android.view.*
-import android.view.animation.*
+import android.animation.ValueAnimator
+import android.content.Context
+import android.graphics.Color
+import android.view.View
+import android.view.ViewGroup
 import android.view.animation.Interpolator
-import android.widget.*
-import com.sevtinge.hyperceiler.hook.utils.api.HyperHelperApis.linearInterpolate
-import com.sevtinge.hyperceiler.hook.utils.blur.MiBlurUtils.*
+import android.view.animation.LinearInterpolator
+import android.widget.FrameLayout
+import com.sevtinge.hyperceiler.hook.utils.MathUtils.linearInterpolate
+import com.sevtinge.hyperceiler.hook.utils.blur.MiBlurUtils.setMiBackgroundBlurMode
+import com.sevtinge.hyperceiler.hook.utils.blur.MiBlurUtils.setMiViewBlurMode
+import com.sevtinge.hyperceiler.hook.utils.blur.MiBlurUtils.setPassWindowBlurEnabled
 import com.sevtinge.hyperceiler.hook.utils.blur.MiBlurUtilsKt.clearAllBlur
 import com.sevtinge.hyperceiler.hook.utils.blur.MiBlurUtilsKt.setMiBackgroundBlurRadius
-import kotlin.math.*
+import kotlin.math.abs
 
 class MiBlurView(context: Context): View(context) {
     companion object {
@@ -47,7 +50,7 @@ class MiBlurView(context: Context): View(context) {
     private var animCount = 0
     private var allowRestoreDirectly = false
     private var isBlurInitialized = false
-    // Personalized Configurations
+    // Personalized configurations
     private var blurEnabled = DEFAULT_BLUR_ENABLED
     private var blurMaxRadius = DEFAULT_BLUR_MAX_RADIUS
     private var dimEnabled = DEFAULT_DIM_ENABLED

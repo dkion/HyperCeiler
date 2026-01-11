@@ -1,27 +1,28 @@
 /*
-  * This file is part of HyperCeiler.
+ * This file is part of HyperCeiler.
 
-  * HyperCeiler is free software: you can redistribute it and/or modify
-  * it under the terms of the GNU Affero General Public License as
-  * published by the Free Software Foundation, either version 3 of the
-  * License.
+ * HyperCeiler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License.
 
-  * This program is distributed in the hope that it will be useful,
-  * but WITHOUT ANY WARRANTY; without even the implied warranty of
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  * GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
 
-  * You should have received a copy of the GNU Affero General Public License
-  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
-*/
+ * Copyright (C) 2023-2025 HyperCeiler Contributions
+ */
 package com.sevtinge.hyperceiler.hook.utils.devicesdk;
+
+import static io.github.kyuubiran.ezxhelper.xposed.EzXposed.getAppContext;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
 
-import com.github.kyuubiran.ezxhelper.EzXHelper;
 
 public class DisplayUtils {
 
@@ -50,7 +51,7 @@ public class DisplayUtils {
     }
 
     public static int dp2px(float dipValue) {
-        final float scale = EzXHelper.getAppContext().getResources().getDisplayMetrics().density;
+        final float scale = getAppContext().getResources().getDisplayMetrics().density;
         return (int) (dipValue * scale + 0.5f);
     }
 
@@ -60,7 +61,7 @@ public class DisplayUtils {
     }
 
     public static int sp2px(float spValue) {
-        final float scale = EzXHelper.getAppContext().getResources().getDisplayMetrics().scaledDensity;
+        final float scale = getAppContext().getResources().getDisplayMetrics().scaledDensity;
         return (int) (spValue * scale + 0.5f);
     }
 
@@ -70,7 +71,7 @@ public class DisplayUtils {
     }
 
     public static int px2dp(float pxValue) {
-        final float scale = EzXHelper.getAppContext().getResources().getDisplayMetrics().density;
+        final float scale = getAppContext().getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
 }

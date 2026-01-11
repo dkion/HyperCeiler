@@ -20,10 +20,9 @@ package com.sevtinge.hyperceiler.hook.module.app;
 
 import com.hchen.database.HookBase;
 import com.sevtinge.hyperceiler.hook.module.base.BaseModule;
-import com.sevtinge.hyperceiler.hook.module.hook.browser.DebugMode;
-import com.sevtinge.hyperceiler.hook.module.hook.browser.DisableReadFiles;
-import com.sevtinge.hyperceiler.hook.module.hook.browser.EnableDebugEnvironment;
-import com.sevtinge.hyperceiler.hook.module.hook.various.UnlockSuperClipboard;
+import com.sevtinge.hyperceiler.hook.module.rules.browser.DebugMode;
+import com.sevtinge.hyperceiler.hook.module.rules.browser.DisableReadFiles;
+import com.sevtinge.hyperceiler.hook.module.rules.browser.EnableDebugEnvironment;
 
 @HookBase(targetPackage = "com.android.browser")
 public class Browser extends BaseModule {
@@ -33,6 +32,5 @@ public class Browser extends BaseModule {
         initHook(new DebugMode(), mPrefsMap.getBoolean("browser_debug_mode"));
         initHook(new DisableReadFiles(), mPrefsMap.getBoolean("browser_disable_blacklist"));
         initHook(new EnableDebugEnvironment(), mPrefsMap.getBoolean("browser_enable_debug_environment"));
-        initHook(UnlockSuperClipboard.INSTANCE, mPrefsMap.getStringAsInt("various_super_clipboard_e", 0) != 0);
     }
 }

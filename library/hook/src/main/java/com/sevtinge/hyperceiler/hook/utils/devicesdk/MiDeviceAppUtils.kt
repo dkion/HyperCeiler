@@ -1,37 +1,37 @@
 /*
-  * This file is part of HyperCeiler.
+ * This file is part of HyperCeiler.
 
-  * HyperCeiler is free software: you can redistribute it and/or modify
-  * it under the terms of the GNU Affero General Public License as
-  * published by the Free Software Foundation, either version 3 of the
-  * License.
+ * HyperCeiler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License.
 
-  * This program is distributed in the hope that it will be useful,
-  * but WITHOUT ANY WARRANTY; without even the implied warranty of
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  * GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
 
-  * You should have received a copy of the GNU Affero General Public License
-  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
-*/
+ * Copyright (C) 2023-2025 HyperCeiler Contributions
+ */
 package com.sevtinge.hyperceiler.hook.utils.devicesdk
 
-import com.github.kyuubiran.ezxhelper.ClassUtils.getStaticObjectOrNullAs
 import com.sevtinge.hyperceiler.hook.utils.api.LazyClass.clazzMiuiBuild
+import io.github.kyuubiran.ezxhelper.core.util.ClassUtil.getStaticObjectOrNull
 
 val IS_TABLET by lazy {
-    getStaticObjectOrNullAs<Boolean>(clazzMiuiBuild, "IS_TABLET") ?: false
+    getStaticObjectOrNull(clazzMiuiBuild, "IS_TABLET") as? Boolean ?: false
 }
 val IS_PAD by lazy {
-    getStaticObjectOrNullAs<Boolean>(clazzMiuiBuild, "IS_PAD") ?: false
+    getStaticObjectOrNull(clazzMiuiBuild, "IS_PAD") as? Boolean ?: false
 }
 val IS_FOLD by lazy {
-    getStaticObjectOrNullAs<Boolean>(clazzMiuiBuild, "IS_FOLD") ?: false
+    getStaticObjectOrNull(clazzMiuiBuild, "IS_FOLD") as? Boolean ?: false
 }
 val IS_INTERNATIONAL_BUILD by lazy {
-    getStaticObjectOrNullAs<Boolean>(clazzMiuiBuild, "IS_INTERNATIONAL_BUILD") ?: false
+    getStaticObjectOrNull(clazzMiuiBuild, "IS_INTERNATIONAL_BUILD") as? Boolean ?: false
 }
 
 /**
@@ -40,7 +40,7 @@ val IS_INTERNATIONAL_BUILD by lazy {
  */
 fun isLargeUI(): Boolean {
     return runCatching {
-        !(!IS_PAD && (!IS_FOLD || !isTablet()))
+        IS_PAD || IS_FOLD || IS_TABLET
     }.getOrElse {
         isPad()
     }

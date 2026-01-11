@@ -20,12 +20,12 @@ package com.sevtinge.hyperceiler.hook.module.app;
 
 import com.hchen.database.HookBase;
 import com.sevtinge.hyperceiler.hook.module.base.BaseModule;
-import com.sevtinge.hyperceiler.hook.module.hook.mediaeditor.CustomWatermark;
-import com.sevtinge.hyperceiler.hook.module.hook.mediaeditor.UnlockAigc;
-import com.sevtinge.hyperceiler.hook.module.hook.mediaeditor.UnlockCustomPhotoFrames;
-import com.sevtinge.hyperceiler.hook.module.hook.mediaeditor.UnlockDisney;
-import com.sevtinge.hyperceiler.hook.module.hook.mediaeditor.UnlockLeicaFilter;
-import com.sevtinge.hyperceiler.hook.module.hook.mediaeditor.UnlockMinimumCropLimit2;
+import com.sevtinge.hyperceiler.hook.module.rules.mediaeditor.CustomWatermark;
+import com.sevtinge.hyperceiler.hook.module.rules.mediaeditor.UnlockAigc;
+import com.sevtinge.hyperceiler.hook.module.rules.mediaeditor.UnlockCustomPhotoFrames;
+import com.sevtinge.hyperceiler.hook.module.rules.mediaeditor.UnlockDisney;
+import com.sevtinge.hyperceiler.hook.module.rules.mediaeditor.UnlockLeicaFilter;
+import com.sevtinge.hyperceiler.hook.module.rules.mediaeditor.UnlockMinimumCropLimit2;
 
 import java.util.Objects;
 
@@ -34,6 +34,8 @@ public class MediaEditor extends BaseModule {
 
     @Override
     public void handleLoadPackage() {
+        int hookType = mPrefsMap.getStringAsInt("mediaeditor_hook_type", 0);
+
         // AI
         initHook(new UnlockAigc(), mPrefsMap.getBoolean("mediaeditor_unlock_aigc"));
         // 基础
@@ -41,13 +43,8 @@ public class MediaEditor extends BaseModule {
         initHook(UnlockLeicaFilter.INSTANCE, mPrefsMap.getBoolean("mediaeditor_unlock_leica_filter"));
         initHook(CustomWatermark.INSTANCE, !Objects.equals(mPrefsMap.getString("mediaeditor_custom_watermark", ""), ""));
         // 创作
-        if (mPrefsMap.getStringAsInt("mediaeditor_hook_type", 0) == 1) {
-            initHook(UnlockCustomPhotoFrames.INSTANCE, mPrefsMap.getStringAsInt("mediaeditor_unlock_custom_photo_frames", 0) != 0);
-            initHook(UnlockDisney.INSTANCE, mPrefsMap.getStringAsInt("mediaeditor_unlock_disney_some_func", 0) != 0);
-        } else if (mPrefsMap.getStringAsInt("mediaeditor_hook_type", 0) == 2) {
-            initHook(UnlockCustomPhotoFrames.INSTANCE, mPrefsMap.getBoolean("mediaeditor_unlock_custom_photo_frames_v2"));
-            initHook(UnlockDisney.INSTANCE, mPrefsMap.getBoolean("mediaeditor_unlock_disney_some_func_v2"));
-        }
+        initHook(UnlockCustomPhotoFrames.INSTANCE, mPrefsMap.getBoolean("mediaeditor_unlock_custom_photo_frames_v2"));
+        initHook(UnlockDisney.INSTANCE, mPrefsMap.getBoolean("mediaeditor_unlock_disney_some_func_v2"));
     }
 
 }

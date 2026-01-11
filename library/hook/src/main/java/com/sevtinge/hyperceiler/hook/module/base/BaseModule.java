@@ -18,6 +18,8 @@
  */
 package com.sevtinge.hyperceiler.hook.module.base;
 
+import static java.util.Arrays.asList;
+
 import com.hchen.hooktool.HCBase;
 import com.hchen.hooktool.HCInit;
 import com.sevtinge.hyperceiler.hook.XposedInit;
@@ -27,10 +29,14 @@ import com.sevtinge.hyperceiler.hook.safe.CrashData;
 import com.sevtinge.hyperceiler.hook.utils.ContextUtils;
 import com.sevtinge.hyperceiler.hook.utils.api.ProjectApi;
 import com.sevtinge.hyperceiler.hook.utils.log.XposedLogUtils;
+import com.sevtinge.hyperceiler.hook.utils.pkg.CheckModifyUtils;
+import com.sevtinge.hyperceiler.hook.utils.pkg.DebugModeUtils;
 import com.sevtinge.hyperceiler.hook.utils.prefs.PrefsMap;
 import com.sevtinge.hyperceiler.hook.utils.prefs.PrefsUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
@@ -39,52 +45,56 @@ public abstract class BaseModule {
     public String TAG = getClass().getSimpleName();
     public final PrefsMap<String, Object> mPrefsMap = PrefsUtils.mPrefsMap;
     private static HashMap<String, String> swappedMap = CrashData.swappedData();
+    private final ArrayList<String> checkList = new ArrayList<>(asList(
+        "com.miui.securitycenter",
+        "com.android.camera",
+        "com.miui.home"
+    ));
 
     public abstract void handleLoadPackage();
 
-    public void initZygote() {
-    }
-
     public void init(LoadPackageParam lpparam) {
-        if (swappedMap.isEmpty()) {
+        if (lpparam == null || !lpparam.isFirstApplication) return;
+
+        if (swappedMap == null || swappedMap.isEmpty()) {
             swappedMap = CrashData.swappedData();
         }
 
-        if (CrashData.toPkgList(lpparam.packageName)) {
-            XposedLogUtils.logI(TAG, "Entry safe mode: " + lpparam.packageName);
-            return;
-        }
-        HCInit.initLoadPackageParam(lpparam);
         // 把模块资源加载到目标应用
         try {
-            if (!ProjectApi.mAppModulePkg.equals(lpparam.packageName)) {
+            if (!Objects.equals(ProjectApi.mAppModulePkg, lpparam.packageName)) {
+                boolean isAndroid = "android".equals(lpparam.packageName);
                 ContextUtils.getWaitContext(context -> {
                     if (context != null) {
                         XposedInit.mResHook.loadModuleRes(context);
                     }
-                }, "android".equals(lpparam.packageName));
+                }, isAndroid);
             }
         } catch (Throwable e) {
-            XposedLogUtils.logE(TAG, "get context failed!" + e);
+            XposedLogUtils.logE(TAG, "get context failed! " + e);
         }
 
         mLoadPackageParam = lpparam;
         DexKit.ready(lpparam, TAG);
+        HCInit.initLoadPackageParam(lpparam);
+
         try {
-            initZygote();
+            boolean isDebug = mPrefsMap.getBoolean("development_debug_mode");
+            for (String pkg : checkList) {
+                if (Objects.equals(lpparam.packageName, pkg)) {
+                    boolean check = CheckModifyUtils.INSTANCE.getCheckResult(lpparam.packageName);
+                    boolean isVersion = DebugModeUtils.INSTANCE.getChooseResult(lpparam.packageName) == 0;
+                    if (check && !isDebug && isVersion) return;
+                    break;
+                }
+            }
             handleLoadPackage();
         } catch (Throwable e) {
-            DexKit.close();
             throw new RuntimeException(e);
+        } finally {
+            DexKit.close();
         }
-        DexKit.close();
     }
-
-    /*public void initHook(BaseHook baseHook) {
-        if (baseHook.isLoad()) {
-            baseHook.onCreate(mLoadPackageParam);
-        }
-    }*/
 
     public void initHook(Object hook) {
         initHook(hook, true);

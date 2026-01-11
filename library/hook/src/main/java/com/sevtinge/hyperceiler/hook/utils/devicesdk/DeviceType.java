@@ -1,6 +1,22 @@
-package com.sevtinge.hyperceiler.hook.utils.devicesdk;
+/*
+ * This file is part of HyperCeiler.
 
-import android.os.Build;
+ * HyperCeiler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+ * Copyright (C) 2023-2025 HyperCeiler Contributions
+ */
+package com.sevtinge.hyperceiler.hook.utils.devicesdk;
 
 import com.sevtinge.hyperceiler.hook.utils.PropUtils;
 
@@ -15,7 +31,7 @@ public class DeviceType {
 
     static {
         IS_DEBUGGABLE = PropUtils.getProp("ro.debuggable", 0) == 1;
-        if (Build.VERSION.SDK_INT > 33) {
+        {
             int type = PropUtils.getProp("persist.sys.multi_display_type", 1);
             if (type > 1) {
                 int i = type & 15;
@@ -30,16 +46,9 @@ public class DeviceType {
                 IS_FLIP = false;
                 IS_FOLD_OUTSIDE = false;
             }
-        } else {
-            int type = PropUtils.getProp("persist.sys.muiltdisplay_type", 0);
-            IS_REAR = type == 1;
-            IS_FOLD_INSIDE = type == 2;
-            IS_FLIP = false;
-            IS_FOLD_OUTSIDE = false;
         }
         IS_FOLDABLE = IS_FOLD_INSIDE || IS_FOLD_OUTSIDE || IS_FLIP;
     }
-
 
     public static boolean isFoldable() {
         return IS_FOLDABLE;

@@ -33,7 +33,7 @@ import androidx.annotation.CallSuper;
 
 import com.sevtinge.hyperceiler.hook.R;
 import com.sevtinge.hyperceiler.hook.module.base.BaseHook;
-import com.sevtinge.hyperceiler.hook.module.base.tool.ResourcesTool;
+import com.sevtinge.hyperceiler.hook.module.base.tool.OtherTool;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import de.robv.android.xposed.XposedHelpers;
@@ -155,13 +155,8 @@ public abstract class TileUtils extends BaseHook {
             }
         };
         try {
-            if (isMoreAndroidVersion(35)) {
-                myTile.getDeclaredMethod("handleLongClick", expandableClz);
-                findAndHookMethod(myTile, "handleLongClick", expandableClz, handleLongClickHook);
-            } else {
-                myTile.getDeclaredMethod("handleLongClick", View.class);
-                findAndHookMethod(myTile, "handleLongClick", View.class, handleLongClickHook);
-            }
+            myTile.getDeclaredMethod("handleLongClick", expandableClz);
+            findAndHookMethod(myTile, "handleLongClick", expandableClz, handleLongClickHook);
         } catch (NoSuchMethodException e) {
             logE(TAG, "com.android.systemui", "Don't Have handleLongClick: " + e);
         }
@@ -195,14 +190,8 @@ public abstract class TileUtils extends BaseHook {
             }
         };
         try {
-            if (isMoreAndroidVersion(35)) {
-                getDeclaredMethod(myTile, "handleClick", expandableClz);
-                findAndHookMethod(myTile, "handleClick", expandableClz, handleClickHook);
-            } else {
-                getDeclaredMethod(myTile, "handleClick", View.class);
-                // myTile.getDeclaredMethod("handleClick", View.class);
-                findAndHookMethod(myTile, "handleClick", View.class, handleClickHook);
-            }
+            getDeclaredMethod(myTile, "handleClick", expandableClz);
+            findAndHookMethod(myTile, "handleClick", expandableClz, handleClickHook);
         } catch (NoSuchMethodException e) {
             logE(TAG, "com.android.systemui", "Don't Have handleClick: " + e);
         }
@@ -317,13 +306,13 @@ public abstract class TileUtils extends BaseHook {
                             String stockTiles = mContext.getString(stockTilesResId) + "," + custom; // 追加自定义的磁贴
                             // 将拼接后的字符串分别替换下面原有的字符串。
                             if (isPad()) {
-                                mResHook.setObjectReplacement(lpparam.packageName, "string", "miui_quick_settings_tiles_stock_pad", stockTiles);
-                                mResHook.setObjectReplacement("miui.systemui.plugin", "string", "miui_quick_settings_tiles_stock_pad", stockTiles);
-                                mResHook.setObjectReplacement("miui.systemui.plugin", "string", "quick_settings_tiles_stock", stockTiles);
+                                setObjectReplacement(lpparam.packageName, "string", "miui_quick_settings_tiles_stock_pad", stockTiles);
+                                setObjectReplacement("miui.systemui.plugin", "string", "miui_quick_settings_tiles_stock_pad", stockTiles);
+                                setObjectReplacement("miui.systemui.plugin", "string", "quick_settings_tiles_stock", stockTiles);
                             } else {
-                                mResHook.setObjectReplacement(lpparam.packageName, "string", "miui_quick_settings_tiles_stock", stockTiles);
-                                mResHook.setObjectReplacement("miui.systemui.plugin", "string", "miui_quick_settings_tiles_stock", stockTiles);
-                                mResHook.setObjectReplacement("miui.systemui.plugin", "string", "quick_settings_tiles_stock", stockTiles);
+                                setObjectReplacement(lpparam.packageName, "string", "miui_quick_settings_tiles_stock", stockTiles);
+                                setObjectReplacement("miui.systemui.plugin", "string", "miui_quick_settings_tiles_stock", stockTiles);
+                                setObjectReplacement("miui.systemui.plugin", "string", "quick_settings_tiles_stock", stockTiles);
                             }
                         }
                     }
@@ -374,9 +363,7 @@ public abstract class TileUtils extends BaseHook {
                                         Object mHandler = XposedHelpers.getObjectField(tile, "mHandler");
                                         XposedHelpers.callMethod(mHandler, "sendEmptyMessage", 12);
                                         XposedHelpers.callMethod(mHandler, "sendEmptyMessage", 11);
-                                        if (isMoreAndroidVersion(35)) {
-                                            XposedHelpers.callMethod(tile, "setTileSpec", tileName);
-                                        }
+                                        XposedHelpers.callMethod(tile, "setTileSpec", tileName);
 
                                         param.setResult(tile);
                                     }
@@ -460,7 +447,7 @@ public abstract class TileUtils extends BaseHook {
                         if (tileName != null) {
                             if (tileName.equals(custom)) {
                                 Context mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
-                                Resources modRes = ResourcesTool.loadModuleRes(mContext);
+                                Resources modRes = OtherTool.getModuleRes(mContext);
                                 param.setResult(modRes.getString(customValue));
                             }
                         }
@@ -488,6 +475,7 @@ public abstract class TileUtils extends BaseHook {
     /*这是另一个长按动作代码
      * 可能不是很严谨，仅在上面长按动作失效时使用
      * 在 HyperOS2 已无此方法，请改用 tileLongClickIntent 方法*/
+    @Deprecated
     public Intent tileHandleLongClick(MethodHookParam param, String tileName) {
         return null;
     }

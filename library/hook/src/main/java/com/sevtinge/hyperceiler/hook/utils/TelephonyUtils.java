@@ -1,22 +1,21 @@
 /*
  * This file is part of HyperCeiler.
- *
+
  * HyperCeiler is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License.
- *
+
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- *
+
  * Copyright (C) 2023-2025 HyperCeiler Contributions
  */
-
 package com.sevtinge.hyperceiler.hook.utils;
 
 import android.Manifest;
@@ -56,7 +55,7 @@ public class TelephonyUtils {
             }
             return !isNeededPhoneNumber;
         }
-        mTelephonyManager = (TelephonyManager) context.getSystemService(TelephonyManager.class);
+        mTelephonyManager = context.getSystemService(TelephonyManager.class);
         assert subscriptionInfo != null;
         mTelephonyManager = getTelephonyManager().createForSubscriptionId(subscriptionInfo.getSubscriptionId());
         ServiceState serviceState = getTelephonyManager().getServiceState();
@@ -105,6 +104,7 @@ public class TelephonyUtils {
         }
     }
 
+    @SuppressLint({"publicApi", "PrivateApi", "BlockedpublicApi", "BlockedPrivateApi"})
     @RequiresPermission(anyOf = {Manifest.permission.READ_PHONE_NUMBERS, "carrier privileges", "android.permission.READ_PRIVILEGED_PHONE_STATE"})
     public static String getFormattedPhoneNumber(Context context, SubscriptionInfo subscriptionInfo) {
         String str;
@@ -124,8 +124,8 @@ public class TelephonyUtils {
         }
 
         try {
-            @SuppressLint("publicApi") Class<?> mccTableClass = Class.forName("com.android.internal.telephony.MccTable");
-            @SuppressLint({"BlockedpublicApi", "BlockedPrivateApi"}) Method countryCodeForMccMethod = mccTableClass.getDeclaredMethod("countryCodeForMcc", String.class);
+            Class<?> mccTableClass = Class.forName("com.android.internal.telephony.MccTable");
+            Method countryCodeForMccMethod = mccTableClass.getDeclaredMethod("countryCodeForMcc", String.class);
             countryCodeForMccMethod.setAccessible(true);
             String countryCode = (String) countryCodeForMccMethod.invoke(null, subscriptionInfo.getMccString());
             return PhoneNumberUtils.formatNumber(str, countryCode.toUpperCase(Locale.ROOT));

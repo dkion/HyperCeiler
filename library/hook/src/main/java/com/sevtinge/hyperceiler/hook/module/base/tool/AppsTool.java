@@ -19,13 +19,13 @@
 package com.sevtinge.hyperceiler.hook.module.base.tool;
 
 import static com.sevtinge.hyperceiler.hook.utils.log.XposedLogUtils.logE;
+import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 
 import android.annotation.SuppressLint;
 import android.app.backup.BackupManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
@@ -68,22 +69,6 @@ public class AppsTool {
 
     public static synchronized Context getProtectedContext(Context context) {
         return context.createDeviceProtectedStorageContext();
-    }
-
-    public static synchronized Context getModuleContext(Context context) throws Throwable {
-        return getModuleContext(context, null);
-    }
-
-    public static synchronized Context getModuleContext(Context context, Configuration config) throws Throwable {
-        Context mModuleContext;
-        mModuleContext = context.createPackageContext(ProjectApi.mAppModulePkg, Context.CONTEXT_IGNORE_SECURITY).createDeviceProtectedStorageContext();
-        return config == null ? mModuleContext : mModuleContext.createConfigurationContext(config);
-    }
-
-    public static synchronized Resources getModuleRes(Context context) throws Throwable {
-        Configuration config = context.getResources().getConfiguration();
-        Context moduleContext = getModuleContext(context);
-        return (config == null ? moduleContext.getResources() : moduleContext.createConfigurationContext(config).getResources());
     }
 
     public static class MimeType {
@@ -130,27 +115,22 @@ public class AppsTool {
         executor.execute(() -> {
             try {
                 Thread.sleep(500);
-            } catch (Throwable ignore) {
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
-            File pkgFolder = context.getDataDir();
-            if (pkgFolder.exists()) {
-                pkgFolder.setExecutable(true, false);
-                pkgFolder.setReadable(true, false);
-                pkgFolder.setWritable(true, false);
-            }
-            File sharedPrefsFolder = new File(PrefsUtils.getSharedPrefsPath());
-            if (sharedPrefsFolder.exists()) {
-                sharedPrefsFolder.setExecutable(true, false);
-                sharedPrefsFolder.setReadable(true, false);
-                sharedPrefsFolder.setWritable(true, false);
-            }
-            File sharedPrefsFile = new File(PrefsUtils.getSharedPrefsFile());
-            if (sharedPrefsFile.exists()) {
-                sharedPrefsFile.setReadable(true, false);
-                sharedPrefsFile.setExecutable(true, false);
-                sharedPrefsFile.setWritable(true, false);
-            }
+
+            setFilePermissions(context.getDataDir());
+            setFilePermissions(new File(PrefsUtils.getSharedPrefsPath()));
+            setFilePermissions(new File(PrefsUtils.getSharedPrefsFile()));
         });
+    }
+
+    private static void setFilePermissions(File file) {
+        if (file != null && file.exists()) {
+            file.setExecutable(true, false);
+            file.setReadable(true, false);
+            file.setWritable(true, false);
+        }
     }
 
     public static void registerFileObserver(Context context) {
@@ -206,10 +186,19 @@ public class AppsTool {
             Class<?> parserCls = XposedHelpers.findClass("android.content.pm.PackageParser", lpparam.classLoader);
             Object parser = parserCls.getDeclaredConstructor().newInstance();
             File apkPath = new File(lpparam.appInfo.sourceDir);
+            if (apkPath.toString().contains("com.miui.securecenter")) {
+                findAndHookMethod(parserCls, "setMaxAspectRatio", float.class, new XC_MethodHook() {
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                        Object arg0 = param.args[0];
+                        if (arg0 instanceof Integer) param.args[0] = (float) (int) arg0;
+                    }
+                });
+            }
             Object pkg = XposedHelpers.callMethod(parser, "parsePackage", apkPath, 0);
             return (String) XposedHelpers.getObjectField(pkg, "mVersionName");
         } catch (Throwable e) {
-            logE("getPackageVersionCode", e);
+            logE("getPackageVersionName", e);
             return "null";
         }
     }
@@ -219,6 +208,15 @@ public class AppsTool {
             Class<?> parserCls = XposedHelpers.findClass("android.content.pm.PackageParser", lpparam.classLoader);
             Object parser = parserCls.getDeclaredConstructor().newInstance();
             File apkPath = new File(lpparam.appInfo.sourceDir);
+            if (apkPath.toString().contains("com.miui.securecenter")) {
+                XposedHelpers.findAndHookMethod(parserCls, "setMaxAspectRatio", float.class, new XC_MethodHook() {
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                        Object arg0 = param.args[0];
+                        if (arg0 instanceof Integer) param.args[0] = (float) (int) arg0;
+                    }
+                });
+            }
             Object pkg = XposedHelpers.callMethod(parser, "parsePackage", apkPath, 0);
             return XposedHelpers.getIntField(pkg, "mVersionCode");
         } catch (Throwable e) {
@@ -227,55 +225,81 @@ public class AppsTool {
         }
     }
 
-    public static boolean handlePackages(String[] packageName) {
-        if (packageName == null) {
-            AndroidLogUtils.logE("doRestart: ", "packageName is null");
+    public static boolean killApps(String[] packageNames, int signal) {
+        if (packageNames == null || packageNames.length == 0) {
+            AndroidLogUtils.logE(TAG, "packageNames is null or empty");
             return false;
         }
-
-        boolean result = false;
-        for (String packageGet : packageName) {
-            if (packageGet == null) continue;
-
-            boolean getResult =
-                    ShellInit.getShell().add("pid=$(pgrep -f \"" + packageGet + "\" | grep -v $$)")
-                            .add("if [[ $pid == \"\" ]]; then")
-                            .add(" pids=\"\"")
-                            .add(" pid=$(ps -A -o PID,ARGS=CMD | grep \"" + packageGet + "\" | grep -v \"grep\")")
-                            .add("  for i in $pid; do")
-                            .add("   if [[ $(echo $i | grep '[0-9]' 2>/dev/null) != \"\" ]]; then")
-                            .add("    if [[ $pids == \"\" ]]; then")
-                            .add("      pids=$i")
-                            .add("    else")
-                            .add("      pids=\"$pids $i\"")
-                            .add("    fi")
-                            .add("   fi")
-                            .add("  done")
-                            .add("fi")
-                            .add("if [[ $pids != \"\" ]]; then")
-                            .add(" pid=$pids")
-                            .add("fi")
-                            .add("if [[ $pid != \"\" ]]; then")
-                            .add(" for i in $pid; do")
-                            .add("  kill -s 15 $i &>/dev/null")
-                            .add(" done")
-                            .add("else")
-                            .add(" echo \"No Find Pid!\"")
-                            .add("fi").over().sync().isResult();
-
+        boolean hasSuccess = false;
+        for (String pkg : packageNames) {
+            if (pkg == null || pkg.trim().isEmpty()) {
+                AndroidLogUtils.logE(TAG, "packageName item is null or empty");
+                continue;
+            }
+            boolean shellResult;
+            try {
+                shellResult =
+                    ShellInit.getShell().add("pid=$(pgrep -f \"" + pkg + "\" | grep -v $$)")
+                        .add("if [[ $pid == \"\" ]]; then")
+                        .add(" pids=\"\"")
+                        .add(" pid=$(ps -A -o PID,ARGS=CMD | grep \"" + pkg + "\" | grep -v \"grep\")")
+                        .add("  for i in $pid; do")
+                        .add("   if [[ $(echo $i | grep '[0-9]' 2>/dev/null) != \"\" ]]; then")
+                        .add("    if [[ $pids == \"\" ]]; then")
+                        .add("      pids=$i")
+                        .add("    else")
+                        .add("      pids=\"$pids $i\"")
+                        .add("    fi")
+                        .add("   fi")
+                        .add("  done")
+                        .add("fi")
+                        .add("if [[ $pids != \"\" ]]; then")
+                        .add(" pid=$pids")
+                        .add("fi")
+                        .add("killed=0")
+                        .add("if [[ $pid != \"\" ]]; then")
+                        .add(" for i in $pid; do")
+                        .add("  kill -s " + signal + " $i &>/dev/null")
+                        .add("  if [[ $? -eq 0 ]]; then killed=1; fi")
+                        .add(" done")
+                        .add(" if [[ $killed -eq 0 ]]; then echo \"No Permission!\"; fi")
+                        .add("else")
+                        .add(" echo \"No Find Pid!\"")
+                        .add("fi").over().sync().isResult();
+            } catch (Exception e) {
+                AndroidLogUtils.logE(TAG, "Exception: " + e.getMessage() + " package: " + pkg);
+                continue;
+            }
             ArrayList<String> outPut = ShellInit.getShell().getOutPut();
             ArrayList<String> error = ShellInit.getShell().getError();
-
-            if (getResult) {
-                if (!outPut.isEmpty() && outPut.get(0).equals("No Find Pid!")) {
-                    return false;
+            if (shellResult) {
+                if (outPut != null && !outPut.isEmpty()) {
+                    String firstLine = outPut.get(0);
+                    if ("No Find Pid!".equals(firstLine)) {
+                        AndroidLogUtils.logW(TAG, "Didn't find a pid that can kill: " + pkg);
+                    } else if ("No Permission!".equals(firstLine)) {
+                        AndroidLogUtils.logW(TAG, "No permission to kill process: " + pkg);
+                    } else {
+                        hasSuccess = true;
+                    }
                 } else {
-                    result = true;
+                    hasSuccess = true;
                 }
             } else {
-                AndroidLogUtils.logE("doRestart: ", "result: " + ShellInit.getShell().getResult() + " errorMsg: " + error + " package: " + packageGet);
+                AndroidLogUtils.logE(TAG, "Shell failed, errorMsg: " + error + " package: " + pkg);
+            }
+            if (error != null && !error.isEmpty()) {
+                AndroidLogUtils.logE(TAG, "Shell error output: " + error + " package: " + pkg);
             }
         }
-        return result;
+        return hasSuccess;
+    }
+
+    public static boolean killApps(String packageName) {
+        return killApps(new String[]{packageName});
+    }
+
+    public static boolean killApps(String... packageNames) {
+        return killApps(packageNames, 15);
     }
 }

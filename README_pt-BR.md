@@ -6,13 +6,13 @@
 
 ### Torne o HyperOS ótimo novamente!
 
-[简体中文](/README.md)&nbsp;&nbsp;|&nbsp;&nbsp;[繁體中文](/README_zh-HK.md)&nbsp;&nbsp;|&nbsp;&nbsp;[English](/README_en-US.md)&nbsp;&nbsp;|&nbsp;&nbsp;Português (Brasil)
+[简体中文](/README.md)&nbsp;&nbsp;|&nbsp;&nbsp;[繁體中文](/README_zh-HK.md)&nbsp;&nbsp;|&nbsp;&nbsp;[English](/README_en-US.md)&nbsp;&nbsp;|&nbsp;&nbsp;[Українська](/README_uk_UA.md)&nbsp;&nbsp;|&nbsp;&nbsp;Português (Brasil)
 
 </div>
 
 ## Versões atualmente suportadas
 
-HyperOS para Android 13-15
+HyperOS para Android 15-16
 
 ## Instruções de pré-uso
 
@@ -20,15 +20,25 @@ Por favor, ative o HyperCeiler no [LSPosed](https://github.com/LSPosed/LSPosed/r
 
 Este módulo <b>não suporta</b> `ROM Xiaomi HyperOS de terceiros com muitas modificações`, `software de sistema com muitas modificações` e algumas `ROM Xiaomi HyperOS internacionais`.
 
-Atualmente, o HyperCeiler está adaptado para dispositivos móveis Xiaomi HyperOS 2.0 baseados em Android 15. A cobertura não é muito abrangente e requer testes e melhorias contínuas.
+Atualmente, o HyperCeiler está adaptado para dispositivos móveis Xiaomi HyperOS 3.0 baseados em Android 16. A cobertura não é muito abrangente e requer testes e melhorias contínuas.
 
 Antes de enviar feedback, preste atenção se já existe o mesmo feedback para evitar problemas aos desenvolvedores. Gastar a mesma energia lendo o mesmo feedback é uma perda de tempo.
 
-O HyperCeiler deixou de ser mantido em ROM MIUI para o Android 11-13 e ROM HyperOS 1.0 para Android 13.
+O HyperCeiler deixou de ser mantido em ROM MIUI para o Android 11-13 e ROM HyperOS 1.0/2.0 para Android 13/14.
 
 > Para ROM MIUI no Android 11-12, use [esta versão](https://github.com/ReChronoRain/Cemiuiler/releases/tag/1.3.130).
-> 
+>
 > Para ROM MIUI no Android 13 e ROM HyperOS 1.0, use [esta versão](https://github.com/Xposed-Modules-Repo/com.sevtinge.hyperceiler/releases/download/3866-2.5.156_20250118/HyperCeiler_2.5.156_20250118_3866_release_miui.apk).
+>
+> O HyperOS 1.0/2.0 do Android 14 foi arquivado e o suporte para o Android 14 será removido a partir da versão 2.6.162.
+
+## Planejamento do projeto
+
+O Xiaomi HyperOS 3 ou 4 será o ponto final deste projeto. Por enquanto, a Xiaomi incorporou seletivamente algumas das funções do Xposed em seus próprios dispositivos (pouco intuitivos), e as capacidades do módulo têm sido gradualmente reduzidas à medida que o sistema é atualizado.
+
+Também acompanhei o Xiaomi HyperOS evoluir, passo a passo, de algo completamente inutilizável sem root para algo quase utilizável (exceto Xiaomi Pad).
+
+No futuro, este módulo será amplamente adaptado ao Xiaomi HyperOS 3.0 e versões posteriores, embora não haja garantia de que todas as funcionalidades estarão disponíveis. O Xiaomi HyperOS 2 será descontinuado em futuras manutenções, devido às grandes diferenças em relação às versões mais recentes.
 
 ## Apps suportados
 
@@ -44,7 +54,6 @@ O HyperCeiler deixou de ser mantido em ROM MIUI para o Android 11-13 e ROM Hyper
 | Joyose                                         | com.xiaomi.joyose                  |
 | Configurações Mi                               | com.xiaomi.misettings              |
 | Segurança                                      | com.miui.securitycenter            |
-| Notas                                          | com.miui.notes                     |
 | Plano de fundo Mi                              | com.miui.miwallpaper               |
 | Taplus                                         | com.miui.contentextension          |
 | Barragem                                       | com.xiaomi.barrage                 |
@@ -54,6 +63,7 @@ O HyperCeiler deixou de ser mantido em ROM MIUI para o Android 11-13 e ROM Hyper
 | Mensagens                                      | com.android.mms                    |
 | Captura de tela                                | com.miui.screenshot                |
 | Calendário                                     | com.android.calendar               |
+| Anotações                                      | com.miui.notes                     |
 | Navegador                                      | com.android.browser                |
 | Rueban (MTB)                                   | com.xiaomi.mtb                     |
 | Gravador de tela                               | com.miui.screenrecorder            |
@@ -83,7 +93,6 @@ O HyperCeiler deixou de ser mantido em ROM MIUI para o Android 11-13 e ROM Hyper
 | Câmera                                         | com.android.camera                 |
 | Mi AI Translate                                | com.xiaomi.aiasst.vision           |
 | Scanner                                        | com.xiaomi.scanner                 |
-| Mi AI                                          | com.miui.voiceassist               |
 | Serviço NFC                                    | com.android.nfc                    |
 | Fones de ouvido                                | com.miui.misound                   |
 | Backup                                         | com.miui.backup                    |
@@ -113,11 +122,13 @@ Junte-se ao nosso grupo para relatar problemas ou obter as atualizações mais r
 
 ## Contribuições de tradução
 
-[![Crowdin](https://badges.crowdin.net/cemiuiler/localized.svg)](https://crowdin.com/project/cemiuiler)
+Você pode fornecer traduções para o projeto [aqui](https://hosted.weblate.org/engage/hyperceiler/).
 
-Você pode fornecer traduções para o projeto [aqui](https://crwd.in/cemiuiler).
+<a href="https://hosted.weblate.org/engage/hyperceiler/">
+<img src="https://hosted.weblate.org/widget/hyperceiler/multi-auto.svg" alt="Translation status" />
+</a>
 
-> Observação: Quando o progresso da tradução do novo idioma for maior ou igual a 90%, ele entrará no processo de mesclagem. Se o progresso da tradução do idioma adicionado for menor ou igual a 30% do texto original, ele será removido temporariamente até que o progresso da tradução seja maior ou igual a 90%.
+> Observação: Quando o progresso da tradução do novo idioma for maior ou igual a 85%, ele entrará no processo de mesclagem. Se o progresso da tradução do idioma adicionado for menor ou igual a 30% do texto original, ele será removido temporariamente até que o progresso da tradução seja maior ou igual a 85%.
 
 ## Obrigado!
 
@@ -127,14 +138,14 @@ Você pode fornecer traduções para o projeto [aqui](https://crwd.in/cemiuiler)
 - [「Android」 por Android Open Source Project, Google Inc.](https://source.android.google.cn/license)
 - [「AndroidHiddenApiBypass」 por LSPosed](https://github.com/LSPosed/AndroidHiddenApiBypass)
 - [「AndroidX」 por Android Open Source Project, Google Inc.](https://github.com/androidx/androidx)
-- [「AutoSEffSwitch」 por 焕晨HChen](https://github.com/HChenX/AutoSEffSwitch)
+- [「AutoSEffSwitch」 por HChenX](https://github.com/HChenX/AutoSEffSwitch)
 - [「AntiAntiDefraud」 por MinaMichita](https://github.com/MinaMichita/AntiAntiDefraud)
 - [「AutoNFC」 por GSWXXN](https://github.com/GSWXXN/AutoNFC)
 - [「BypassSignCheck」 por Weverses](https://github.com/Weverses/BypassSignCheck)
 - [「CorePatch」 por LSPosed](https://github.com/LSPosed/CorePatch)
 - [「CustoMIUIzer」 por MonwF](https://github.com/MonwF/customiuizer)
 - [「CustoMIUIzerMod」 por liyafe1997](https://github.com/liyafe1997/CustoMIUIzerMod)
-- [「ClipboardList」 por 焕晨HChen](https://github.com/HChenX/ClipboardList)
+- [「ClipboardList」 por HChenX](https://github.com/HChenX/ClipboardList)
 - [「DexKit」 por LuckyPray](https://github.com/LuckyPray/DexKit)
 - [「Disable app link verify」 por tehcneko](https://github.com/Xposed-Modules-Repo/io.github.tehcneko.applinkverify)
 - [「DisableFlagSecure」 por LSPosed](https://github.com/LSPosed/DisableFlagSecure)
@@ -142,11 +153,13 @@ Você pode fornecer traduções para o projeto [aqui](https://crwd.in/cemiuiler)
 - [「EzXHelper」 por KyuubiRan](https://github.com/KyuubiRan/EzXHelper)
 - [「FixMiuiMediaControlPanel」 por qqlittleice](https://github.com/qqlittleice/FixMiuiMediaControlPanel)
 - [「FocusNotifLyric」 por wuyou-123](https://github.com/wuyou-123/FocusNotifLyric)
-- [「ForegroundPin」 por 焕晨HChen](https://github.com/HChenX/ForegroundPin)
+- [「ForegroundPin」 por HChenX](https://github.com/HChenX/ForegroundPin)
 - [「FuckNFC」 por xiaowine](https://github.com/xiaowine/FuckNFC)
 - [「Gson」 por Android Open Source Project, Google Inc.](https://github.com/google/gson)
 - [「XiaomiHelper」 por HowieHChen](https://github.com/HowieHChen/XiaomiHelper)
 - [「HideMiuiClipboardDialog」 por zerorooot](https://github.com/zerorooot/HideMiuiClipboardDialog)
+- [「HookTool」 por HChenX](https://github.com/HChenX/HookTool)
+- [「HyperFocusApi」 por ghhccghk](https://github.com/ghhccghk/HyperFocusApi)
 - [「HyperSmartCharge」 por buffcow](https://github.com/buffcow/HyperSmartCharge)
 - [「HyperStar」 por YunZiA](https://github.com/YunZiA/HyperStar)
 - [「Kotlin」 por JetBrains](https://github.com/JetBrains/kotlin)
@@ -162,11 +175,11 @@ Você pode fornecer traduções para o projeto [aqui](https://crwd.in/cemiuiler)
 - [「ModemPro」 por Weverse](https://github.com/Weverses/ModemPro)
 - [「NoStorageRestrict」 por DanGLES3](https://github.com/Xposed-Modules-Repo/com.github.dan.nostoragerestrict)
 - [「PortalHook」 por Haocen2004](https://github.com/Haocen2004/PortalHook)
-- [「PinningApp」 por 焕晨HChen](https://github.com/HChenX/PinningApp)
+- [「PinningApp」 por HChenX](https://github.com/HChenX/PinningApp)
 - [「RemoveMiuiSystemSelfProtection」 por gfbjngjibn](https://github.com/gfbjngjibn/RemoveMiuiSystemSelfProtection)
 - [「SettingsDontThroughTheList」 por weixiansen574](https://github.com/weixiansen574/settingsdontthroughthelist)
 - [「StarVoyager」 por hosizoraru](https://github.com/hosizoraru/StarVoyager)
-- [「SuperLyric」 by HChenX](https://github.com/HChenX/SuperLyric)
+- [「SuperLyric」 por HChenX](https://github.com/HChenX/SuperLyric)
 - [「WINI」 por ouhoukyo](https://github.com/ouhoukyo/WINI)
 - [「WOMMO」 por YifePlayte](https://github.com/YifePlayte/WOMMO)
 - [「Woobox For MIUI」 por hosizoraru](https://github.com/hosizoraru/WooBoxForMIUI)
