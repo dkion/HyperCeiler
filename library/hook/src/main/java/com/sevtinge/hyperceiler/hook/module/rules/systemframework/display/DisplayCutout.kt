@@ -14,17 +14,16 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hook.module.rules.systemframework.display
 
 import com.sevtinge.hyperceiler.hook.module.base.BaseHook
-import com.sevtinge.hyperceiler.hook.module.base.tool.HookTool
 
 object DisplayCutout : BaseHook() {
     override fun init() {
         hookAllMethods("android.view.DisplayCutout", "pathAndDisplayCutoutFromSpec",
-            object : HookTool.MethodHook() {
+            object : MethodHook() {
                 override fun before(param: MethodHookParam) {
                     param.args[0] = "M 0,0 H 0 V 0 Z"
                     param.args[1] = ""

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler;
 
@@ -24,34 +24,51 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Process;
 
-import com.fan.common.logviewer.LogAppProxy;
+import androidx.annotation.NonNull;
+
+import com.fan.common.logviewer.LogManager;
+import com.fan.common.logviewer.LogViewerActivity;
+import com.fan.common.logviewer.XposedLogLoader;
 import com.sevtinge.hyperceiler.common.utils.LSPosedScopeHelper;
-import com.sevtinge.hyperceiler.hook.utils.prefs.PrefsUtils;
+import com.sevtinge.hyperceiler.common.utils.ScopeManager;
+import com.sevtinge.hyperceiler.libhook.utils.log.AndroidLog;
+import com.sevtinge.hyperceiler.libhook.utils.prefs.PrefsUtils;
 import com.sevtinge.hyperceiler.model.data.AppInfoCache;
 import com.sevtinge.hyperceiler.safemode.ExceptionCrashActivity;
-import com.tencent.mmkv.MMKV;
+import com.sevtinge.hyperceiler.utils.DeviceInfoBuilder;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class Application extends android.app.Application {
+import io.github.libxposed.service.RemotePreferences;
+import io.github.libxposed.service.XposedService;
+import io.github.libxposed.service.XposedServiceHelper;
+
+public class Application extends android.app.Application implements XposedServiceHelper.OnServiceListener {
     private static final String TAG = "HyperCeiler:Application";
+    private static final Runnable reloadListener = () -> {};
+    public static boolean isModuleActivated = false;
 
     @Override
     protected void attachBaseContext(Context base) {
-        PrefsUtils.mSharedPreferences = PrefsUtils.getSharedPrefs(base);
         super.attachBaseContext(base);
+        PrefsUtils.mSharedPreferences = PrefsUtils.getSharedPrefs(base);
+        XposedServiceHelper.registerListener(this);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        MMKV.initialize(this, this.getApplicationInfo().dataDir + "/files/mmkv");
-        LogAppProxy.onCreate(this);
-        // 初始化所有应用信息到缓存
-        AppInfoCache.getInstance(this).initAllAppInfos();
 
-        LSPosedScopeHelper.init(this);
+        // 初始化日志系统
+        LogManager.setDeviceInfoProvider(DeviceInfoBuilder::build);
+        LogManager.init(this);
+        com.sevtinge.hyperceiler.libhook.utils.log.LogManager.init(this.getDataDir().getAbsolutePath());
+        LogViewerActivity.setXposedLogLoader((context, callback) -> XposedLogLoader.loadLogs(callback));
+
+        new Thread(() -> AppInfoCache.getInstance(this).initAllAppInfos()).start();
+
+        LSPosedScopeHelper.init();
         setupCrashHandler();
     }
 
@@ -77,5 +94,26 @@ public class Application extends android.app.Application {
                 System.exit(1);
             }
         });
+    }
+
+    @Override
+    public void onServiceBind(@NonNull XposedService service) {
+        AndroidLog.d(TAG, "LSPosed service connected: " + service.getFrameworkName() + " v" + service.getFrameworkVersion());
+        synchronized (this) {
+            isModuleActivated = true;
+            ScopeManager.setService(service);
+            PrefsUtils.remotePrefs =
+                (RemotePreferences) service.getRemotePreferences(PrefsUtils.mPrefsName + "_remote");
+            reloadListener.run();
+        }
+    }
+
+    @Override
+    public void onServiceDied(@NonNull XposedService xposedService) {
+        AndroidLog.e(TAG, "LSPosed service died.");
+        synchronized (this) {
+            isModuleActivated = false;
+            PrefsUtils.remotePrefs = null;
+        }
     }
 }

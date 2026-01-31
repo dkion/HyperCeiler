@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui.controlcenter
 
@@ -29,7 +29,7 @@ import io.github.kyuubiran.ezxhelper.xposed.dsl.HookFactory.`-Static`.createBefo
 
 object NotificationImportanceHyperOSFix : BaseHook() {
     override fun init() {
-        loadClass("com.android.systemui.statusbar.notification.collection.coordinator.StackCoordinator\$attach$1")
+        loadClass($$"com.android.systemui.statusbar.notification.collection.coordinator.StackCoordinator$attach$1")
             .methodFinder().filterByName("onAfterRenderList")
             .first().createBeforeHook { param ->
                 val mNotificationEntries = param.args[0] as List<*>

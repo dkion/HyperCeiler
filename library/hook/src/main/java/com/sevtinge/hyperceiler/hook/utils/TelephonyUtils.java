@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.utils;
 
@@ -113,7 +113,7 @@ public class TelephonyUtils {
         }
 
         try {
-            SubscriptionManager subscriptionManager = (SubscriptionManager) context.getSystemService(SubscriptionManager.class);
+            SubscriptionManager subscriptionManager = context.getSystemService(SubscriptionManager.class);
             str = subscriptionManager.getPhoneNumber(subscriptionInfo.getSubscriptionId());
         } catch (IllegalStateException e) {
             str = "";

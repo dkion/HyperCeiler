@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hook.module.rules.barrage
 
@@ -33,7 +33,7 @@ import java.lang.reflect.Method
 object BarrageNotTouchable : BaseHook() {
 
     override fun init() {
-        loadClass("com.xiaomi.barrage.utils.BarrageWindowUtils\$ComputeInternalInsetsHandler").methodFinder()
+        loadClass($$"com.xiaomi.barrage.utils.BarrageWindowUtils$ComputeInternalInsetsHandler").methodFinder()
             .filterByName("invoke").filterNonAbstract().single().createBeforeHook { param ->
                 val method = param.args[1] as Method
                 if (!method.name.equals("onComputeInternalInsets")) return@createBeforeHook

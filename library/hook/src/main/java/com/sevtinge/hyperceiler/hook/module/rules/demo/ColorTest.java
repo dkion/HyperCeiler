@@ -14,13 +14,11 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hook.module.rules.demo;
 
-import android.graphics.Color;
-
-import com.hchen.hooktool.utils.ResInjectTool;
+import com.sevtinge.hyperceiler.hook.R;
 import com.sevtinge.hyperceiler.hook.module.base.BaseHook;
 
 public class ColorTest extends BaseHook {
@@ -30,7 +28,7 @@ public class ColorTest extends BaseHook {
                 new MethodHook() {
                     @Override
                     protected void before(MethodHookParam param) {
-                        ResInjectTool.setObjectReplacement("com.hchen.demo", "color", "my_test_color", Color.RED);
+                        setResReplacement("com.hchen.demo", "color", "my_test_color", R.color.red);
                     }
                 }
         );

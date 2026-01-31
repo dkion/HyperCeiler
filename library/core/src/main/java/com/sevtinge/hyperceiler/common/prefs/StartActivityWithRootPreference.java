@@ -14,30 +14,29 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.common.prefs;
 
-import static com.sevtinge.hyperceiler.hook.utils.log.XposedLogUtils.logE;
-import static com.sevtinge.hyperceiler.hook.utils.shell.ShellUtils.checkRootPermission;
+import static com.sevtinge.hyperceiler.libhook.utils.shell.ShellUtils.checkRootPermission;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceViewHolder;
 
 import com.sevtinge.hyperceiler.core.R;
+import com.sevtinge.hyperceiler.libhook.utils.log.AndroidLog;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import androidx.preference.Preference;
-import androidx.preference.PreferenceViewHolder;
-
 public class StartActivityWithRootPreference extends Preference {
 
-    private String targetActivityClass;
+    private final String targetActivityClass;
 
     public StartActivityWithRootPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -49,9 +48,7 @@ public class StartActivityWithRootPreference extends Preference {
     public void onBindViewHolder(@NonNull PreferenceViewHolder holder) {
         super.onBindViewHolder(holder);
 
-        holder.itemView.setOnClickListener(v -> {
-            launchActivityWithRoot();
-        });
+        holder.itemView.setOnClickListener(v -> launchActivityWithRoot());
     }
 
     private void launchActivityWithRoot() {
@@ -65,7 +62,7 @@ public class StartActivityWithRootPreference extends Preference {
                 os.flush();
                 suProcess.waitFor();
             } catch (IOException | InterruptedException e) {
-                logE("StartActivityWithRootPreference", "com.sevtinge.hyperceiler", "Failed to start activity \"" + targetActivityClass + "\" with root", e);
+                AndroidLog.e("StartActivityWithRootPreference", "com.sevtinge.hyperceiler", "Failed to start activity \"" + targetActivityClass + "\" with root", e);
             }
         } else {
             Toast.makeText(this.getContext(), R.string.start_failed, Toast.LENGTH_SHORT).show();

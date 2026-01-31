@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.utils;
+
+import static com.sevtinge.hyperceiler.Application.isModuleActivated;
 
 import android.content.Context;
 
 import com.sevtinge.hyperceiler.common.utils.DialogHelper;
 
 public class XposedActivateHelper {
-
-    public static boolean isModuleActive = false;
     public static int XposedVersion = 0;
 
     public static void init(Context context) {
@@ -32,6 +32,6 @@ public class XposedActivateHelper {
     }
 
     private static void checkActivateState(Context context) {
-        if (!isModuleActive) DialogHelper.showXposedActivateDialog(context);
+        if (!isModuleActivated) DialogHelper.showXposedActivateDialog(context);
     }
 }

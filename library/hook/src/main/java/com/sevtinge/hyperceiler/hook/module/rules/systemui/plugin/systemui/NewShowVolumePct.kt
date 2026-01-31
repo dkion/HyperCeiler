@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui.plugin.systemui
 
@@ -48,9 +48,9 @@ object NewShowVolumePct {
         }
         val volumePanelViewControllerListener by lazy {
             if (isMoreHyperOSVersion(3f)) {
-                loadClass("miui.systemui.controlcenter.panel.main.volume.VolumeSliderController\$seekBarListener$1", classLoader)
+                loadClass($$"miui.systemui.controlcenter.panel.main.volume.VolumeSliderController$seekBarListener$1", classLoader)
             } else {
-                loadClass("com.android.systemui.miui.volume.VolumePanelViewController\$VolumeSeekBarChangeListener", classLoader)
+                loadClass($$"com.android.systemui.miui.volume.VolumePanelViewController$VolumeSeekBarChangeListener", classLoader)
             }
         }
 

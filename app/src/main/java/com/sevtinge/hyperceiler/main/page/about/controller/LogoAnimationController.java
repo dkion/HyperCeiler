@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.main.page.about.controller;
 
@@ -25,7 +25,7 @@ import android.view.View;
 
 import com.sevtinge.hyperceiler.R;
 import com.sevtinge.hyperceiler.common.utils.SettingsFeatures;
-import com.sevtinge.hyperceiler.hook.utils.devicesdk.DisplayUtils;
+import com.sevtinge.hyperceiler.libhook.utils.api.DisplayUtils;
 import com.sevtinge.hyperceiler.main.model.TabViewModel;
 
 import java.util.Objects;

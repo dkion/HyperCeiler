@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.holiday.weather;
 
@@ -561,7 +561,7 @@ public class ConfettiManager {
                 processNewEmission(elapsedTime);
                 updateConfetti(elapsedTime);
 
-                if (confetti.size() == 0 && elapsedTime >= emissionDuration) {
+                if (confetti.isEmpty() && elapsedTime >= emissionDuration) {
                     terminate();
                 } else {
                     confettiView.invalidate();

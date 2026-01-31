@@ -14,18 +14,20 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.common.utils;
 
-import static com.sevtinge.hyperceiler.hook.utils.prefs.PrefsUtils.mSharedPreferences;
+
+import static com.sevtinge.hyperceiler.libhook.utils.prefs.PrefsUtils.mSharedPreferences;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.text.TextUtils;
 
-import com.sevtinge.hyperceiler.hook.utils.log.AndroidLogUtils;
+import com.sevtinge.hyperceiler.libhook.utils.log.AndroidLog;
 
 import java.util.Locale;
 
@@ -84,11 +86,11 @@ public class LanguageHelper {
     public static int resultIndex(String[] languages, String value) {
         for (int i = 0; i < languages.length; i++) {
             if (languages[i] != null && languages[i].equals(value)) {
-                AndroidLogUtils.logI("Language", "Match found: " + languages[i] + " at index " + i);
+                AndroidLog.i("Language", "Match found: " + languages[i] + " at index " + i);
                 return i;
             }
         }
-        AndroidLogUtils.logE("Language", "No match found for: " + value);
+        AndroidLog.e("Language", "No match found for: " + value);
         return 0; // 遇到错误就切回英语，防止崩溃
     }
 
@@ -96,8 +98,24 @@ public class LanguageHelper {
         return string.equals(string.toUpperCase());
     }
 
-    private static Locale getCachedLocale(String language, String country) {
+    public static Locale getCachedLocale(String language, String country) {
         String key = country.isEmpty() ? language : language + "_" + country;
         return localeCache.computeIfAbsent(key, k -> country.isEmpty() ? new Locale(language) : new Locale(language, country));
     }
+
+    public static Locale localeFromAppLanguage(String lang) {
+        if (TextUtils.isEmpty(lang)) {
+            return Locale.ENGLISH;
+        }
+
+        String[] parts = lang.split("_");
+        if (parts.length == 1) {
+            return new Locale(parts[0]);
+        } else if (parts.length == 2) {
+            return new Locale(parts[0], parts[1]);
+        } else {
+            return Locale.ENGLISH;
+        }
+    }
+
 }

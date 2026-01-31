@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.utils;
 
@@ -181,7 +181,7 @@ public class NotificationUtils {
     public static void setEnableFloat(Notification notification, boolean enable) {
         try {
             Object obj = notification.getClass().getDeclaredField("extraNotification").get(notification);
-            obj.getClass().getDeclaredMethod("setEnableFloat", Boolean.TYPE).invoke(obj, Boolean.valueOf(enable));
+            obj.getClass().getDeclaredMethod("setEnableFloat", Boolean.TYPE).invoke(obj, enable);
         } catch (Exception unused) {}
     }
 

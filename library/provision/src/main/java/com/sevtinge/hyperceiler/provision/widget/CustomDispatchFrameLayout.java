@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.provision.widget;
 
@@ -59,7 +59,7 @@ public class CustomDispatchFrameLayout extends FrameLayout {
     }
 
     protected boolean isAnimEnded() {
-        return mProvisionAnimHelper != null ? mProvisionAnimHelper.isAnimEnded() : true;
+        return mProvisionAnimHelper == null || mProvisionAnimHelper.isAnimEnded();
     }
 
 }

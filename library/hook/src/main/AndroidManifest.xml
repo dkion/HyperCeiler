@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2025 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application>
@@ -26,22 +26,6 @@
             android:directBootAware="true"
             android:exported="true"
             android:grantUriPermissions="true" />
-
-        <meta-data
-            android:name="xposedmodule"
-            android:value="true" />
-        <meta-data
-            android:name="xposedminversion"
-            android:value="93" />
-        <meta-data
-            android:name="xposeddescription"
-            android:value="@string/xposed_description" />
-        <meta-data
-            android:name="xposedsharedprefs"
-            android:value="true" />
-        <meta-data
-            android:name="xposedscope"
-            android:resource="@array/xposed_scope" />
 
     </application>
 </manifest>

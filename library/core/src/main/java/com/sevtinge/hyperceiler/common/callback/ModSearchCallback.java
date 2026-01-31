@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.common.callback;
 
@@ -38,11 +38,11 @@ public class ModSearchCallback implements SearchActionMode.Callback {
     private View mAnimView;
     private EditText mSearchInput;
 
-    private OnSearchListener mOnSearchListener;
-    private SearchView.OnQueryTextListener mOnQueryTextListener;
+    private final OnSearchListener mOnSearchListener;
+    private final SearchView.OnQueryTextListener mOnQueryTextListener;
 
     private String mSearchText = "";
-    private TextWatcher mSearchTextWatcher = new TextWatcher() {
+    private final TextWatcher mSearchTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 

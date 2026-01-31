@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.module.rules.aiasst
 
@@ -43,12 +43,38 @@ object NewAiCaptions: BaseHook() {
         }
     }
 
+    private val getMethodNew by lazy<Method> {
+        DexKit.findMember("AiCaptionsModelNew") {
+            it.findClass {
+                matcher {
+                    addEqString("SupportAiSubtitlesUtils")
+                }
+            }.findMethod {
+                matcher {
+                    // SupportAiSubtitlesUtils
+                    addInvoke {
+                        addUsingField("Landroid/os/Build;->DEVICE:Ljava/lang/String;")
+                        paramCount = 0
+                    }
+
+                    addInvoke("Ljava/util/Set;->iterator()Ljava/util/Iterator;")
+                }
+            }.single()
+        }
+    }
+
 
 
     override fun init() {
         if (mSupportAiSubtitlesUtils == null) {
-            getMethod.createHook {
-                returnConstant(true)
+            runCatching {
+                getMethod.createHook {
+                    returnConstant(true)
+                }
+            }.onFailure {
+                getMethodNew.createHook {
+                    returnConstant(true)
+                }
             }
         } else {
             runCatching {

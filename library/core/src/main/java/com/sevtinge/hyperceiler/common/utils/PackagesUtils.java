@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.common.utils;
 
@@ -32,11 +32,9 @@ import android.net.Uri;
 import android.os.Parcelable;
 
 import com.sevtinge.hyperceiler.common.model.data.AppData;
-import com.sevtinge.hyperceiler.hook.callback.ITAG;
-import com.sevtinge.hyperceiler.hook.provider.SharedPrefsProvider;
-import com.sevtinge.hyperceiler.hook.utils.BitmapUtils;
-import com.sevtinge.hyperceiler.hook.utils.ContextUtils;
-import com.sevtinge.hyperceiler.hook.utils.log.AndroidLogUtils;
+import com.sevtinge.hyperceiler.libhook.provider.SharedPrefsProvider;
+import com.sevtinge.hyperceiler.libhook.utils.api.ContextUtils;
+import com.sevtinge.hyperceiler.libhook.utils.log.AndroidLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +44,7 @@ import java.util.Objects;
  * Author by 焕晨HChen
  */
 public class PackagesUtils {
-    private static final String TAG = ITAG.TAG;
+    private static final String TAG = "PackagesUtils";
 
     /**
      * 通过 flag 获取系统内已经安装的软件。
@@ -107,7 +105,7 @@ public class PackagesUtils {
             packageManager.getPackageInfo(pkg, PackageManager.MATCH_ALL);
             return false;
         } catch (PackageManager.NameNotFoundException e) {
-            AndroidLogUtils.logW(TAG, "Didn't find this app on the machine, it may have been uninstalled! " + pkg + " E: " + e);
+            AndroidLog.w(TAG, "Didn't find this app on the machine, it may have been uninstalled! " + pkg + " E: " + e);
             return true;
         }
     }
@@ -234,7 +232,7 @@ public class PackagesUtils {
                 }
                 appInfoList.add(addAppData(pack, pm));
             } catch (Throwable e) {
-                AndroidLogUtils.logE(TAG, "Failed to get open way!", e);
+                AndroidLog.e(TAG, "Failed to get open way!", e);
             }
         }
         return appInfoList;
@@ -270,7 +268,7 @@ public class PackagesUtils {
                 }
             }
         } catch (Throwable e) {
-            AndroidLogUtils.logE(TAG, "Failed to get package via code!", e);
+            AndroidLog.e(TAG, "Failed to get package via code!", e);
         }
         return appDataList;
     }
@@ -287,7 +285,7 @@ public class PackagesUtils {
             }
             return appDataList;
         } catch (Throwable e) {
-            AndroidLogUtils.logE(TAG, "Failed to get the list of installed apps via flag!", e);
+            AndroidLog.e(TAG, "Failed to get the list of installed apps via flag!", e);
         }
         return appDataList;
     }
@@ -306,7 +304,7 @@ public class PackagesUtils {
             }
             return appDataList;
         } catch (Throwable e) {
-            AndroidLogUtils.logE(TAG, "Failed to get app list via intent!", e);
+            AndroidLog.e(TAG, "Failed to get app list via intent!", e);
         }
         return appDataList;
     }
@@ -378,7 +376,7 @@ public class PackagesUtils {
      */
     public static boolean isSystem(ApplicationInfo app) {
         if (Objects.isNull(app)) {
-            AndroidLogUtils.logE(TAG, "isSystem app is null, will return false");
+            AndroidLog.e(TAG, "isSystem app is null, will return false");
             return false;
         }
         if (app.uid < 10000) {
@@ -391,7 +389,7 @@ public class PackagesUtils {
         try {
             return getContext();
         } catch (Throwable e) {
-            AndroidLogUtils.logE(TAG, e);
+            AndroidLog.e(TAG, e);
             return null;
         }
     }

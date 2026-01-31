@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.model.data;
 
@@ -31,9 +31,9 @@ import java.util.List;
 public class AppInfoCache {
 
     // 上下文（使用Application Context避免内存泄漏）
-    private Context mContext;
+    private final Context mContext;
     // LruCache缓存（key：包名，value：ApplicationInfo）
-    private LruCache<String, ApplicationInfo> mAppInfoCache;
+    private final LruCache<String, ApplicationInfo> mAppInfoCache;
     // 单例实例（volatile保证多线程可见性）
     private static volatile AppInfoCache sInstance;
 

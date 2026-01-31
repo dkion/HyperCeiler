@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hook.module.rules.mediaeditor
 
@@ -43,11 +43,32 @@ object CustomWatermark : BaseHook() {
         }
     }
 
+    private val searchNew by lazy<Method> {
+        // 2.2.0.1.6 开始混淆类名和字符串
+        DexKit.findMember("CustomWatermarkNew") {
+            it.findClass {
+                matcher {
+                    addUsingString("check geocode selectable", StringMatchType.Contains)
+                }
+            }.findMethod {
+                matcher {
+                    addInvoke("Ljava/lang/String;->hashCode()I")
+                    returnType = "java.lang.String"
+                    paramCount = 3
+                }
+            }.single()
+        }
+    }
+
     override fun init() {
-        logD(TAG, lpparam.packageName, "[CustomWatermark] search method is $search")
-        search.createHook {
-            // 当前只能修改后缀
-            returnConstant(name)
+        runCatching {
+            search.createHook {
+                returnConstant(name)
+            }
+        }.onFailure {
+            searchNew.createHook {
+                returnConstant(name)
+            }
         }
 
         /*SystemProperties.methodFinder()

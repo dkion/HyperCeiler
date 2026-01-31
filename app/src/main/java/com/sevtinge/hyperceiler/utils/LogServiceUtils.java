@@ -14,18 +14,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.utils;
 
-import static com.sevtinge.hyperceiler.hook.utils.api.ProjectApi.isRelease;
-import static com.sevtinge.hyperceiler.hook.utils.log.LogManager.IS_LOGGER_ALIVE;
-import static com.sevtinge.hyperceiler.utils.XposedActivateHelper.isModuleActive;
+
+import static com.sevtinge.hyperceiler.Application.isModuleActivated;
+import static com.sevtinge.hyperceiler.libhook.utils.api.ProjectApi.isRelease;
+import static com.sevtinge.hyperceiler.libhook.utils.log.LogManager.IS_LOGGER_ALIVE;
 
 import android.content.Context;
 
 import com.sevtinge.hyperceiler.common.utils.DialogHelper;
-import com.sevtinge.hyperceiler.hook.utils.prefs.PrefsUtils;
+import com.sevtinge.hyperceiler.libhook.utils.prefs.PrefsUtils;
 
 public class LogServiceUtils {
 
@@ -40,7 +41,7 @@ public class LogServiceUtils {
     }
 
     private static boolean showLogServiceWarn() {
-        return !IS_LOGGER_ALIVE && isModuleActive && !isRelease() &&
-            !PrefsUtils.mSharedPreferences.getBoolean("prefs_key_development_close_log_alert_dialog", false);
+        return !IS_LOGGER_ALIVE && isModuleActivated && !isRelease() &&
+            !PrefsUtils.mPrefsMap.getBoolean("prefs_key_development_close_log_alert_dialog", false);
     }
 }

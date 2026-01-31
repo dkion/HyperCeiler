@@ -14,18 +14,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hooker.systemui;
 
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.SystemSDKKt.isMoreHyperOSVersion;
+
+import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.isMoreHyperOSVersion;
 
 import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 import androidx.preference.SwitchPreference;
 
-import com.sevtinge.hyperceiler.dashboard.DashboardFragment;
 import com.sevtinge.hyperceiler.core.R;
+import com.sevtinge.hyperceiler.dashboard.DashboardFragment;
 
 import fan.preference.ColorPickerPreference;
 import fan.preference.DropDownPreference;
@@ -40,6 +41,7 @@ public class MediaCardSettings extends DashboardFragment implements Preference.O
     DropDownPreference mAlbumMode;
     SwitchPreference mOptAlbum;
     DropDownPreference mProgressMode;
+    DropDownPreference mProgressThumbMode;
     SeekBarPreferenceCompat mProgressModeThickness;
     SeekBarPreferenceCompat mProgressModeCornerRadius;
     ColorPickerPreference mSliderColor;
@@ -61,6 +63,7 @@ public class MediaCardSettings extends DashboardFragment implements Preference.O
         mOptAlbum = findPreference("prefs_key_system_ui_control_center_media_control_album_picture_rounded_corners");
 
         mProgressMode = findPreference("prefs_key_system_ui_control_center_media_control_progress_mode");
+        mProgressThumbMode = findPreference("prefs_key_system_ui_control_center_media_control_progress_thumb_mode");
         mProgressModeThickness = findPreference("prefs_key_system_ui_control_center_media_control_progress_thickness");
         mProgressModeCornerRadius = findPreference("prefs_key_system_ui_control_center_media_control_progress_corner_radius");
         mSliderColor = findPreference("prefs_key_system_ui_control_center_media_control_seekbar_thumb_color");
@@ -74,7 +77,7 @@ public class MediaCardSettings extends DashboardFragment implements Preference.O
             if (mediaBackgroundModeValue == 5) {
                 cleanKey("prefs_key_system_ui_control_center_media_control_background_mode");
             }
-        }
+        } else setPreVisible(mProgressThumbMode, false);
         mColorAnim.setVisible(mediaBackgroundModeValue != 0 && mediaBackgroundModeValue != 5);
         mInverseColor.setVisible(mediaBackgroundModeValue == 4);
         mBlurRadius.setVisible(mediaBackgroundModeValue == 2);

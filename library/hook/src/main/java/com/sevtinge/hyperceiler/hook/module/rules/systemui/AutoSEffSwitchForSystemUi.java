@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui;
 
@@ -31,7 +31,7 @@ import com.sevtinge.hyperceiler.hook.IEffectInfo;
 
 public class AutoSEffSwitchForSystemUi extends HCBase {
     private static final String TAG = "AutoSEffSwitchForSystemUi";
-    private boolean isInit = false;
+    private final boolean isInit = false;
     private static IEffectInfo mIEffectInfo;
 
     @Override

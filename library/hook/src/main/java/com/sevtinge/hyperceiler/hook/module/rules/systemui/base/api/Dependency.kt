@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui.base.api
 
@@ -24,12 +24,13 @@ import com.sevtinge.hyperceiler.hook.utils.callStaticMethod
 import com.sevtinge.hyperceiler.hook.utils.getObjectField
 import com.sevtinge.hyperceiler.hook.utils.getObjectFieldAs
 import com.sevtinge.hyperceiler.hook.utils.getStaticObjectFieldAs
+import io.github.kyuubiran.ezxhelper.core.ClassLoaderProvider.classLoader
 import io.github.kyuubiran.ezxhelper.core.util.ClassUtil.loadClass
 
 @Suppress("unused")
 object Dependency {
     private val CLASS by lazy {
-        loadClass("com.android.systemui.Dependency")
+        loadClass("com.android.systemui.Dependency", classLoader)
     }
 
     val INSTANCE by lazy {

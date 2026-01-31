@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui.statusbar.icon.v
 
@@ -136,13 +136,13 @@ object FocusNotifLyric : MusicBaseHook() {
 
         if (!isMoreHyperOSVersion(3f)) return
         runCatching {
-            loadClass("miui.systemui.notification.auth.AuthManager\$AuthServiceCallback\$onAuthResult$1",classLoader)
+            loadClass($$"miui.systemui.notification.auth.AuthManager$AuthServiceCallback$onAuthResult$1",classLoader)
                 .methodFinder().filterByName("invokeSuspend")
                 .first().createHook {
                     before { param ->
                         val obj = param.thisObject
                         // 访问字段 "$authBundle"
-                        val bundle = obj.getObjectField("\$authBundle") as Bundle
+                        val bundle = obj.getObjectField($$"$authBundle") as Bundle
                         bundle.putInt("result_code",0)
                     }
                 }

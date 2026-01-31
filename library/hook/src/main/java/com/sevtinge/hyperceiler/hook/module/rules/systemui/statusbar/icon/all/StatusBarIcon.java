@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui.statusbar.icon.all;
 
@@ -73,16 +73,16 @@ public class StatusBarIcon extends BaseHook {
         // from XiaomiHelper with GPL3
         switch (value) {
             case 1 -> {
-                if (statusBarList.contains(name)) statusBarList.remove(name);
-                if (controlList.contains(name)) controlList.remove(name);
+                statusBarList.remove(name);
+                controlList.remove(name);
             }
             case 12 -> {
-                if (statusBarList.contains(name)) statusBarList.remove(name);
+                statusBarList.remove(name);
                 if (!controlList.contains(name)) controlList.add(name);
             }
             case 11 -> {
                 if (!statusBarList.contains(name)) statusBarList.add(name);
-                if (controlList.contains(name)) controlList.remove(name);
+                controlList.remove(name);
             }
             case 2 -> {
                 if (!statusBarList.contains(name)) statusBarList.add(name);

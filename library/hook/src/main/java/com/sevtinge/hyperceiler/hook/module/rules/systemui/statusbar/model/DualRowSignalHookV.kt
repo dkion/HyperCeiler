@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui.statusbar.model
 
@@ -361,7 +361,7 @@ class DualRowSignalHookV : BaseHook() {
         }
 
         val resetImageWithTintLight = miuiMobileIconBinder.methodFinder()
-            .filterByName("access\$resetImageWithTintLight")
+            .filterByName($$"access$resetImageWithTintLight")
             .singleOrNull()
         if (resetImageWithTintLight != null) {
             resetImageWithTintLight.createHook {
@@ -389,7 +389,7 @@ class DualRowSignalHookV : BaseHook() {
                         val viewBinding = param.result
 
                         val tintLightColorFlow = try {
-                            viewBinding.getObjectField("\$tintLightColorFlow")
+                            viewBinding.getObjectField($$"$tintLightColorFlow")
                         } catch (e: Exception) {
                             logE(TAG, lpparam.packageName, e)
                             null

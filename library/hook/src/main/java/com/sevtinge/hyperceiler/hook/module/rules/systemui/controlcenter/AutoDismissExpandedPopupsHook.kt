@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui.controlcenter
 
@@ -39,9 +39,9 @@ object AutoDismissExpandedPopupsHook : BaseHook() {
     private val mHeadsUpEntryPhoneClass by lazy {
         if (isMoreAndroidVersion(36)) {
             // Android 16 合并了 HeadsUpManagerPhone，不再继承
-            loadClass("com.android.systemui.statusbar.notification.headsup.HeadsUpManagerImpl\$HeadsUpEntry")
+            loadClass($$"com.android.systemui.statusbar.notification.headsup.HeadsUpManagerImpl$HeadsUpEntry")
         } else {
-            loadClass("com.android.systemui.statusbar.phone.HeadsUpManagerPhone\$HeadsUpEntryPhone")
+            loadClass($$"com.android.systemui.statusbar.phone.HeadsUpManagerPhone$HeadsUpEntryPhone")
         }
     }
 

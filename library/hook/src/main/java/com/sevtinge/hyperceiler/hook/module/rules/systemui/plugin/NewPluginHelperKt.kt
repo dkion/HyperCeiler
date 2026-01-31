@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui.plugin
 
@@ -66,7 +66,7 @@ object NewPluginHelperKt : BaseHook() {
             }*/
 
         // https://github.com/buffcow/Hyper5GSwitch/blob/master/app/src/main/kotlin/cn/buffcow/hyper5g/hooker/PluginLoader.kt
-        loadClass("com.android.systemui.shared.plugins.PluginInstance\$PluginFactory")
+        loadClass($$"com.android.systemui.shared.plugins.PluginInstance$PluginFactory")
             .methodFinder().filterByName("createPluginContext")
             .first().createAfterHook { it ->
                 runCatching {

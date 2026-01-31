@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.provision.activity;
 
@@ -27,7 +27,7 @@ import com.sevtinge.hyperceiler.provision.fragment.PermissionSettingsFragment;
 
 public class PermissionSettingsActivity extends BaseActivity {
 
-    private Handler mBottomHandler = new Handler();
+    private final Handler mBottomHandler = new Handler();
 
     @Override
     protected int getLogoDrawableId() {

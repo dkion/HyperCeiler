@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.provision.text.style;
 
@@ -34,7 +34,7 @@ import java.util.HashMap;
 public class ClickSpan extends ClickableSpan {
 
     private Context mContext;
-    private HashMap<String, Integer> mPrivacyTypeMap;
+    private final HashMap<String, Integer> mPrivacyTypeMap;
 
     public ClickSpan(Context context, HashMap<String, Integer> typeMap) {
         this(typeMap);

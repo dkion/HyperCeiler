@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.provision.utils;
 
@@ -97,57 +97,52 @@ public interface IAnimCallback extends IInterface {
             return super.onTransact(code, data, reply, flags);
         }
 
-        private static class Proxy implements IAnimCallback {
-            public static IAnimCallback sDefaultImpl;
-            private IBinder mRemote;
-
-            Proxy(IBinder binder) {
-                mRemote = binder;
-            }
+        private record Proxy(IBinder mRemote) implements IAnimCallback {
+                    public static IAnimCallback sDefaultImpl;
 
             @Override
-            public IBinder asBinder() {
-                return mRemote;
-            }
-
-            public String getInterfaceDescriptor() {
-                return DESCRIPTOR;
-            }
-
-            @Override
-            public void onNextAminStart() throws RemoteException {
-                Parcel data = Parcel.obtain();
-                Parcel reply = Parcel.obtain();
-                try {
-                    data.writeInterfaceToken(DESCRIPTOR);
-                    if (!mRemote.transact(TRANSACTION_onNextAminStart, data, reply, 0) && Stub.getDefaultImpl() != null) {
-                        Stub.getDefaultImpl().onNextAminStart();
-                    } else {
-                        reply.readException();
+                    public IBinder asBinder() {
+                        return mRemote;
                     }
-                } finally {
-                    reply.recycle();
-                    data.recycle();
-                }
-            }
 
-            @Override
-            public void onBackAnimStart() throws RemoteException {
-                Parcel data = Parcel.obtain();
-                Parcel reply = Parcel.obtain();
-                try {
-                    data.writeInterfaceToken(DESCRIPTOR);
-                    if (!mRemote.transact(TRANSACTION_onBackAnimStart, data, reply, 0) && Stub.getDefaultImpl() != null) {
-                        Stub.getDefaultImpl().onBackAnimStart();
-                    } else {
-                        reply.readException();
+                    public String getInterfaceDescriptor() {
+                        return DESCRIPTOR;
                     }
-                } finally {
-                    reply.recycle();
-                    data.recycle();
+
+                    @Override
+                    public void onNextAminStart() throws RemoteException {
+                        Parcel data = Parcel.obtain();
+                        Parcel reply = Parcel.obtain();
+                        try {
+                            data.writeInterfaceToken(DESCRIPTOR);
+                            if (!mRemote.transact(TRANSACTION_onNextAminStart, data, reply, 0) && Stub.getDefaultImpl() != null) {
+                                Stub.getDefaultImpl().onNextAminStart();
+                            } else {
+                                reply.readException();
+                            }
+                        } finally {
+                            reply.recycle();
+                            data.recycle();
+                        }
+                    }
+
+                    @Override
+                    public void onBackAnimStart() throws RemoteException {
+                        Parcel data = Parcel.obtain();
+                        Parcel reply = Parcel.obtain();
+                        try {
+                            data.writeInterfaceToken(DESCRIPTOR);
+                            if (!mRemote.transact(TRANSACTION_onBackAnimStart, data, reply, 0) && Stub.getDefaultImpl() != null) {
+                                Stub.getDefaultImpl().onBackAnimStart();
+                            } else {
+                                reply.readException();
+                            }
+                        } finally {
+                            reply.recycle();
+                            data.recycle();
+                        }
+                    }
                 }
-            }
-        }
 
         public static boolean setDefaultImpl(IAnimCallback callback) {
             if (Proxy.sDefaultImpl != null) {

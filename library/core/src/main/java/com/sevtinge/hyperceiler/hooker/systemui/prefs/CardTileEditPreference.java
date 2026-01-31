@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hooker.systemui.prefs;
 
@@ -34,7 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sevtinge.hyperceiler.common.model.adapter.CardTileAdapter;
 import com.sevtinge.hyperceiler.common.model.adapter.CardTileAddAdapter;
 import com.sevtinge.hyperceiler.core.R;
-import com.sevtinge.hyperceiler.hook.utils.prefs.PrefsUtils;
+import com.sevtinge.hyperceiler.libhook.utils.prefs.PrefsUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -87,13 +87,9 @@ public class CardTileEditPreference extends Preference {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback());
         itemTouchHelper.attachToRecyclerView(mCardTiles);
 
-        mCardTileAdapter.setOnDataChangeListener((changed, tile) -> {
-            onDataSetChanged(tile, true);
-        });
+        mCardTileAdapter.setOnDataChangeListener((changed, tile) -> onDataSetChanged(tile, true));
 
-        mAddCardTileAdapter.setOnDataChangeListener((changed, tile) -> {
-            onDataSetChanged(tile, false);
-        });
+        mAddCardTileAdapter.setOnDataChangeListener((changed, tile) -> onDataSetChanged(tile, false));
         setVisibility(PrefsUtils.mSharedPreferences.getBoolean("prefs_key_systemui_plugin_card_tiles_enabled", false));
     }
 

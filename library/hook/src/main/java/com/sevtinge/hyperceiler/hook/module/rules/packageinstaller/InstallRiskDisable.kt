@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hook.module.rules.packageinstaller
 
@@ -51,7 +51,7 @@ object InstallRiskDisable : BaseHook() {
         DexKit.findMember("InstallRiskDisable3") {
             it.findMethod {
                 matcher {
-                    addUsingString("android.provider.MiuiSettings\$Ad", StringMatchType.Equals)
+                    addUsingString($$"android.provider.MiuiSettings$Ad", StringMatchType.Equals)
                     returnType = "boolean"
                 }
             }.single()

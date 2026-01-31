@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hook.module.rules.packageinstaller
 
@@ -116,7 +116,7 @@ object DisplayMoreApkInfoNew : BaseHook() {
                 matcher {
                     modifiers = Modifier.PUBLIC
                     returnType = "void"
-                    paramTypes = listOf("com.miui.packageInstaller.ui.listcomponets.AppInfoViewObject\$ViewHolder")
+                    paramTypes = listOf($$"com.miui.packageInstaller.ui.listcomponets.AppInfoViewObject$ViewHolder")
                 }
             }.single()
         }
@@ -131,7 +131,8 @@ object DisplayMoreApkInfoNew : BaseHook() {
                 }
             }.findField {
                 matcher {
-                    type = "com.miui.packageInstaller.ui.listcomponets.AppInfoViewObject\$ViewHolder"
+                    type =
+                        $$"com.miui.packageInstaller.ui.listcomponets.AppInfoViewObject$ViewHolder"
                     modifiers = Modifier.PRIVATE
                 }
             }.singleOrNull()
@@ -156,7 +157,7 @@ object DisplayMoreApkInfoNew : BaseHook() {
 
         logD(TAG, this.lpparam.packageName, "mAppInfoViewObject is $mAppInfoViewObject")
         mAppInfoViewObjectViewHolder =
-            "com.miui.packageInstaller.ui.listcomponets.AppInfoViewObject\$ViewHolder".findClassOrNull()
+            $$"com.miui.packageInstaller.ui.listcomponets.AppInfoViewObject$ViewHolder".findClassOrNull()
 
         val candidateMethods: Array<Method> =
             XposedHelpers.findMethodsByExactParameters(mAppInfoViewObject, Void.TYPE, mAppInfoViewObjectViewHolder)

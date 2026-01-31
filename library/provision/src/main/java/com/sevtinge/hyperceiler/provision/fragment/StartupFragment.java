@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.provision.fragment;
 
@@ -40,7 +40,6 @@ import com.sevtinge.hyperceiler.provision.utils.IOnFocusListener;
 import com.sevtinge.hyperceiler.provision.utils.OobeUtils;
 
 import fan.animation.Folme;
-import fan.animation.base.AnimConfig;
 import fan.core.utils.MiuiBlurUtils;
 import fan.internal.utils.LiteUtils;
 
@@ -106,7 +105,7 @@ public class StartupFragment extends BaseFragment implements IOnFocusListener {
             view.findViewById(R.id.show_qr_view).setOnClickListener(new StartupFragment$5(this));
         }*/
         if (OobeUtils.isMiuiSdkSupportFolme()) {
-            Folme.useAt(mNext).touch().handleTouchOf(mNext, new AnimConfig[0]);
+            Folme.useAt(mNext).touch().handleTouchOf(mNext);
         }
         mNext.setOnClickListener(v -> {
             ProvisionActivity activity = (ProvisionActivity) getActivity();

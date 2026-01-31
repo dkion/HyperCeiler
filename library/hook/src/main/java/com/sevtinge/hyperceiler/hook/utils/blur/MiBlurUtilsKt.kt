@@ -14,12 +14,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.utils.blur
 
-import android.graphics.*
-import android.view.*
+import android.graphics.Outline
+import android.graphics.Point
+import android.view.View
+import android.view.ViewOutlineProvider
 
 object MiBlurUtilsKt {
 
@@ -42,6 +44,10 @@ object MiBlurUtilsKt {
 
     private val setMiBackgroundBlurRadius by lazy {
         View::class.java.getDeclaredMethod("setMiBackgroundBlurRadius", Integer.TYPE)
+    }
+
+    private val setMiBackgroundBlendColors by lazy {
+        View::class.java.getDeclaredMethod("setMiBackgroundBlendColors", ArrayList::class.java)
     }
 
     private val addMiBackgroundBlendColor by lazy {
@@ -87,6 +93,10 @@ object MiBlurUtilsKt {
 
     fun View.disableMiBackgroundContainBelow(isEnabled: Boolean) {
         disableMiBackgroundContainBelow.invoke(this, isEnabled)
+    }
+
+    fun View.setMiBackgroundBlendColors(list: ArrayList<Point>) {
+        setMiBackgroundBlendColors(this, list)
     }
 
     fun View.addMiBackgroundBlendColor(color: Int, mode: Int) {

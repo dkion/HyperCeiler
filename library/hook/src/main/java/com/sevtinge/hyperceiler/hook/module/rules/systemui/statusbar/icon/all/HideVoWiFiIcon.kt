@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui.statusbar.icon.all
 
@@ -32,7 +32,7 @@ object HideVoWiFiIcon : BaseHook() {
     }
 
     override fun init() {
-        loadClass("com.miui.interfaces.IOperatorCustomizedPolicy\$OperatorConfig").constructors[0].createHook {
+        loadClass($$"com.miui.interfaces.IOperatorCustomizedPolicy$OperatorConfig").constructors[0].createHook {
             after {
                 it.thisObject.setBooleanField("hideVowifi", hideVoWifi)
                 it.thisObject.setBooleanField("hideVolte", hideVolte)

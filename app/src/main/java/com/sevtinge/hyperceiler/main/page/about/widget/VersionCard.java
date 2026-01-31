@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.main.page.about.widget;
 
@@ -58,7 +58,7 @@ import com.sevtinge.hyperceiler.BuildConfig;
 import com.sevtinge.hyperceiler.R;
 import com.sevtinge.hyperceiler.common.utils.SettingsFeatures;
 import com.sevtinge.hyperceiler.common.view.CubicEaseOutInterpolater;
-import com.sevtinge.hyperceiler.hook.utils.devicesdk.DisplayUtils;
+import com.sevtinge.hyperceiler.libhook.utils.api.DisplayUtils;
 import com.sevtinge.hyperceiler.main.page.about.controller.LogoAnimationController;
 
 import java.security.SecureRandom;
@@ -184,9 +184,7 @@ public class VersionCard extends FrameLayout implements View.OnClickListener {
                     notificationManager.notify(notificationId, builder.build());
 
                     // 9 秒后自动关闭
-                    new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                        notificationManager.cancel(notificationId);
-                    }, 9000);
+                    new Handler(Looper.getMainLooper()).postDelayed(() -> notificationManager.cancel(notificationId), 9000);
 
 
                     return true;

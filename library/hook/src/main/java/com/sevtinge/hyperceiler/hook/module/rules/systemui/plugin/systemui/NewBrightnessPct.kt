@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui.plugin.systemui
 
@@ -34,26 +34,26 @@ import io.github.kyuubiran.ezxhelper.xposed.dsl.HookFactory.`-Static`.createBefo
 object NewBrightnessPct {
     fun initLoaderHook(classLoader: ClassLoader) {
         if (isMoreHyperOSVersion(3f)) {
-            loadClass("miui.systemui.controlcenter.panel.secondary.brightness.BrightnessPanelSliderDelegate\$prepareShow$5", classLoader)
+            loadClass($$"miui.systemui.controlcenter.panel.secondary.brightness.BrightnessPanelSliderDelegate$prepareShow$5", classLoader)
                 .methodFinder().filterByName("onStartTrackingTouch")
                 .first().createBeforeHook {
                     startPct(it)
                 }
 
-            loadClass("miui.systemui.controlcenter.panel.secondary.brightness.BrightnessPanelSliderDelegate\$seekBarListener$1", classLoader)
+            loadClass($$"miui.systemui.controlcenter.panel.secondary.brightness.BrightnessPanelSliderDelegate$seekBarListener$1", classLoader)
                 .methodFinder().filterByName("onStartTrackingTouch")
                 .first().createBeforeHook {
                     startPct(it)
                 }
 
         } else {
-            loadClass("miui.systemui.controlcenter.panel.main.brightness.BrightnessSliderController\$seekBarListener$1", classLoader)
+            loadClass($$"miui.systemui.controlcenter.panel.main.brightness.BrightnessSliderController$seekBarListener$1", classLoader)
                 .methodFinder().filterByName("onStartTrackingTouch")
                 .first().createBeforeHook {
                     startPct(it)
                 }
 
-            loadClass("miui.systemui.controlcenter.panel.main.brightness.BrightnessPanelSliderController\$seekBarListener$1", classLoader)
+            loadClass($$"miui.systemui.controlcenter.panel.main.brightness.BrightnessPanelSliderController$seekBarListener$1", classLoader)
                 .methodFinder().filterByName("onStartTrackingTouch")
                 .first().createBeforeHook {
                     startPct(it)

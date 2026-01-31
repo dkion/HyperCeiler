@@ -14,17 +14,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui.plugin.systemui;
 
 import static de.robv.android.xposed.XC_MethodReplacement.returnConstant;
-
-import de.robv.android.xposed.XposedHelpers;
+import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 
 public class HideEditButton {
     public static void initHideEditButton(ClassLoader classLoader) {
-        XposedHelpers.findAndHookMethod("miui.systemui.controlcenter.panel.main.qs.EditButtonController", classLoader, "available", boolean.class, returnConstant(false));
-        XposedHelpers.findAndHookMethod("miui.systemui.controlcenter.panel.main.qs.EditButtonController", classLoader, "available", boolean.class, "miui.systemui.controlcenter.panel.main.MainPanelModeController$MainPanelMode", returnConstant(false));
+        findAndHookMethod("miui.systemui.controlcenter.panel.main.qs.EditButtonController", classLoader, "available", boolean.class, returnConstant(false));
+        findAndHookMethod("miui.systemui.controlcenter.panel.main.qs.EditButtonController", classLoader, "available", boolean.class, "miui.systemui.controlcenter.panel.main.MainPanelModeController$MainPanelMode", returnConstant(false));
     }
 }

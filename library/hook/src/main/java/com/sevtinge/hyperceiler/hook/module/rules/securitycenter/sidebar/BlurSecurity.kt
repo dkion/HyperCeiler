@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hook.module.rules.securitycenter.sidebar
 
@@ -291,7 +291,7 @@ object BlurSecurity : BaseHook() {
                         val listView = getValueByField(param.thisObject, "c") as ListView
                         val listViewAdapterClassName = listView.adapter.javaClass.name
                         val listViewAdapterInnerClass =
-                            findClassIfExists("$listViewAdapterClassName\$a") ?: return
+                            findClassIfExists($$"$$listViewAdapterClassName$a") ?: return
                         XposedBridge.hookAllMethods(
                             listViewAdapterInnerClass,
                             "a",

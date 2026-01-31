@@ -15,7 +15,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2025 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
@@ -44,7 +44,7 @@
         tools:ignore="ProtectedPermissions" />
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
-        tools:ignore="QueryAllPackagesPermission" />
+        tools:ignore="PackageVisibilityPolicy,QueryAllPackagesPermission" />
     <uses-permission
         android:name="android.permission.WRITE_SECURE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
@@ -79,9 +79,12 @@
         android:name=".Application"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:description="@string/xposed_description"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:forceQueryable="true"
         android:allowNativeHeapPointerTagging="true">
 
         <activity

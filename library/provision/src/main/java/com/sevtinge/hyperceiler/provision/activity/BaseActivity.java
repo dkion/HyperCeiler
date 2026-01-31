@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.provision.activity;
 
@@ -106,11 +106,10 @@ public abstract class BaseActivity extends ProvisionBaseActivity {
         }
         if (mFragment != null) {
             View description = mFragment.getView().findViewById(R.id.list_description);
-            if (description != null && (description instanceof TextView)) {
+            if (description != null && (description instanceof TextView textView)) {
                 CharSequence listDescCharSequence = getListDescCharSequence();
                 if (listDescCharSequence != null) {
                     description.setTextDirection(OobeUtils.isRTL() ? 4 : 3);
-                    TextView textView = (TextView) description;
                     textView.setText(listDescCharSequence);
                     description.setVisibility(View.VISIBLE);
                 } else {

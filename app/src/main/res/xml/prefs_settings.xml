@@ -14,7 +14,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   ~
-  ~ Copyright (C) 2023-2025 HyperCeiler Contributions
+  ~ Copyright (C) 2023-2026 HyperCeiler Contributions
   -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -83,6 +83,14 @@
             android:title="@string/log_level"
             app:entries="@array/log_level"
             app:entryValues="@array/log_level_value" />
+
+        <Preference
+            android:key="prefs_key_log_viewer"
+            android:title="@string/log_viewer">
+            <intent
+                android:targetPackage="com.sevtinge.hyperceiler"
+                android:targetClass="com.fan.common.logviewer.LogViewerActivity"/>
+        </Preference>
 
         <Preference
             android:fragment="com.sevtinge.hyperceiler.main.page.settings.development.DevelopmentFragment"

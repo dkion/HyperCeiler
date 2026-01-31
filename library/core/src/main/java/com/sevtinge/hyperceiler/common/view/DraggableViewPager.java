@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.common.view;
 
@@ -80,7 +80,7 @@ public class DraggableViewPager extends ViewPager {
         }
     }*/
 
-    public class ViewPagerScroller extends Scroller {
+    public static class ViewPagerScroller extends Scroller {
 
         private int mDuration = 1000;
 

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.module.app.SystemUI.Phone;
 
@@ -33,12 +33,14 @@ import com.sevtinge.hyperceiler.hook.module.rules.systemui.base.api.MiuiStub;
 import com.sevtinge.hyperceiler.hook.module.rules.systemui.base.controlcenter.MediaControlBgFactory;
 import com.sevtinge.hyperceiler.hook.module.rules.systemui.controlcenter.AutoDismissExpandedPopupsHook;
 import com.sevtinge.hyperceiler.hook.module.rules.systemui.controlcenter.ControlCenterStyle;
+import com.sevtinge.hyperceiler.hook.module.rules.systemui.controlcenter.CustomCarrierText;
 import com.sevtinge.hyperceiler.hook.module.rules.systemui.controlcenter.ExpandNotificationKt;
 import com.sevtinge.hyperceiler.hook.module.rules.systemui.controlcenter.FiveGTile;
 import com.sevtinge.hyperceiler.hook.module.rules.systemui.controlcenter.FixTilesList;
 import com.sevtinge.hyperceiler.hook.module.rules.systemui.controlcenter.GmsTile;
 import com.sevtinge.hyperceiler.hook.module.rules.systemui.controlcenter.MuteVisibleNotifications;
 import com.sevtinge.hyperceiler.hook.module.rules.systemui.controlcenter.NewFlashLight;
+import com.sevtinge.hyperceiler.hook.module.rules.systemui.controlcenter.NotificationColor;
 import com.sevtinge.hyperceiler.hook.module.rules.systemui.controlcenter.NotificationImportanceHyperOSFix;
 import com.sevtinge.hyperceiler.hook.module.rules.systemui.controlcenter.NotificationWeather;
 import com.sevtinge.hyperceiler.hook.module.rules.systemui.controlcenter.OldWeather;
@@ -190,6 +192,8 @@ public class SystemUIB extends BaseModule {
         initHook(new ZenModeFix(), mPrefsMap.getBoolean("system_ui_control_center_zen_fix"));
         initHook(new DisableTransparent(), mPrefsMap.getBoolean("system_ui_control_center_notification_disable_transparent"));
         initHook(ControlCenterStyle.INSTANCE, mPrefsMap.getBoolean("system_control_center_unlock_old"));
+        initHook(CustomCarrierText.INSTANCE, mPrefsMap.getStringAsInt("system_ui_control_center_hide_operator", 0) != 0);
+        initHook(new NotificationColor(), mPrefsMap.getBoolean("system_ui_control_center_opt_notification_element_background_color"));
 
         // 磁贴
         initHook(new AutoCollapse(), mPrefsMap.getBoolean("system_ui_control_auto_close"));
@@ -215,8 +219,9 @@ public class SystemUIB extends BaseModule {
         initHook(MediaPicture.INSTANCE, mPrefsMap.getBoolean("system_ui_control_center_media_control_album_picture_rounded_corners") ||
             mPrefsMap.getStringAsInt("system_ui_control_center_media_control_media_album_mode", 0) == 1);
         initHook(MediaSeekBar.INSTANCE, mPrefsMap.getInt("system_ui_control_center_media_control_seekbar_color", -1) != -1
-            || mPrefsMap.getInt("system_ui_control_center_media_control_seekbar_thumb_color", -1) != -1 ||
-            mPrefsMap.getStringAsInt("system_ui_control_center_media_control_progress_mode", 0) != 0);
+            || mPrefsMap.getInt("system_ui_control_center_media_control_seekbar_thumb_color", -1) != -1
+            || mPrefsMap.getStringAsInt("system_ui_control_center_media_control_progress_mode", 0) != 0
+            || mPrefsMap.getStringAsInt("system_ui_control_center_media_control_progress_thumb_mode", 0) != 0);
 
         // Other
         initHook(DoubleTapToSleep.INSTANCE, mPrefsMap.getBoolean("system_ui_status_bar_double_tap_to_sleep"));

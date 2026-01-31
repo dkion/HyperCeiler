@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.common.utils;
 
 import static com.sevtinge.hyperceiler.common.utils.CtaUtils.setCtaValue;
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.DisplayUtils.dp2px;
-import static com.sevtinge.hyperceiler.hook.utils.log.LogManager.LOGGER_CHECKER_ERR_CODE;
-import static com.sevtinge.hyperceiler.hook.utils.shell.ShellUtils.checkRootPermission;
+import static com.sevtinge.hyperceiler.libhook.utils.api.DisplayUtils.dp2px;
+import static com.sevtinge.hyperceiler.libhook.utils.log.LoggerHealthChecker.LOGGER_CHECKER_ERR_CODE;
+import static com.sevtinge.hyperceiler.libhook.utils.shell.ShellUtils.checkRootPermission;
 
 import android.app.Activity;
 import android.content.Context;
@@ -41,11 +41,11 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.sevtinge.hyperceiler.common.view.RestartAlertDialog;
-import com.sevtinge.hyperceiler.hook.module.base.tool.AppsTool;
-import com.sevtinge.hyperceiler.hook.utils.prefs.PrefsUtils;
-import com.sevtinge.hyperceiler.hook.utils.shell.ShellExec;
-import com.sevtinge.hyperceiler.hook.utils.shell.ShellInit;
 import com.sevtinge.hyperceiler.core.R;
+import com.sevtinge.hyperceiler.libhook.utils.hookapi.tool.AppsTool;
+import com.sevtinge.hyperceiler.libhook.utils.prefs.PrefsUtils;
+import com.sevtinge.hyperceiler.libhook.utils.shell.ShellExec;
+import com.sevtinge.hyperceiler.libhook.utils.shell.ShellInit;
 
 import fan.androidbase.widget.LinkMovementMethod;
 import fan.appcompat.app.AlertDialog;
@@ -180,9 +180,7 @@ public class DialogHelper {
         builder.setNegativeButton(R.string.safe_mode_ok, (dialog, which) -> activity.finish());
 
         AlertDialog dialog = builder.create();
-        dialog.setOnCancelListener(dialogInterface -> {
-            activity.finish();
-        });
+        dialog.setOnCancelListener(dialogInterface -> activity.finish());
         dialog.show();
     }
 

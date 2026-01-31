@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.utils.shell;
 
@@ -74,12 +74,8 @@ public class ShellInit {
         } else {
             if (lastReady) {
                 AndroidLogUtils.logW(TAG, "ShellExec is null!! Attempt to rewrite creation...");
-                return new ShellExec(true, true, mResult);
-            } else {
-                return new ShellExec(true, true, mResult);
-                // throw new RuntimeException("ShellExec is null!! " +
-                //     "And it seems like it has never been created successfully!");
             }
+            return new ShellExec(true, true, mResult);
         }
     }
 

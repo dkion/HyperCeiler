@@ -14,17 +14,16 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hook.module.rules.securitycenter.other
 
 import android.provider.Settings
 import com.sevtinge.hyperceiler.hook.module.base.BaseHook
-import com.sevtinge.hyperceiler.hook.module.base.tool.HookTool
 
 object NoLowBatteryWarning : BaseHook() {
     override fun init() {
-        val settingHook: MethodHook = object : HookTool.MethodHook() {
+        val settingHook: MethodHook = object : MethodHook() {
             override fun before(param: MethodHookParam) {
                 val key = param.args[1] as String
                 if ("low_battery_dialog_disabled" == key) param.result = 1

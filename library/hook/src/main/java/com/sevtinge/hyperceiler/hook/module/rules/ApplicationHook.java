@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.module.rules;
 
@@ -28,7 +28,6 @@ import com.sevtinge.hyperceiler.hook.callback.IAttachBaseContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.function.Consumer;
 
 public class ApplicationHook extends HCBase {
     public static IAttachBaseContext[] iAttachBaseContexts;
@@ -65,23 +64,13 @@ public class ApplicationHook extends HCBase {
 
     private void callBackBefore(ParamTool param, Context context) {
         if (iAttachBaseContexts != null) {
-            Arrays.stream(iAttachBaseContexts).forEach(new Consumer<IAttachBaseContext>() {
-                @Override
-                public void accept(IAttachBaseContext iAttachBaseContext) {
-                    iAttachBaseContext.onAttachBaseContextCreateBefore(param, context);
-                }
-            });
+            Arrays.stream(iAttachBaseContexts).forEach(iAttachBaseContext -> iAttachBaseContext.onAttachBaseContextCreateBefore(param, context));
         }
     }
 
     private void callBackAfter(ParamTool param, Context context) {
         if (iAttachBaseContexts != null) {
-            Arrays.stream(iAttachBaseContexts).forEach(new Consumer<IAttachBaseContext>() {
-                @Override
-                public void accept(IAttachBaseContext iAttachBaseContext) {
-                    iAttachBaseContext.onAttachBaseContextCreateAfter(param, context);
-                }
-            });
+            Arrays.stream(iAttachBaseContexts).forEach(iAttachBaseContext -> iAttachBaseContext.onAttachBaseContextCreateAfter(param, context));
         }
     }
 }

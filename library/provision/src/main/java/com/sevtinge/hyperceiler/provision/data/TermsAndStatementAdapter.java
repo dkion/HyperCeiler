@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.provision.data;
 
@@ -34,10 +34,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.sevtinge.hyperceiler.provision.R;
 import com.sevtinge.hyperceiler.provision.text.style.ClickSpan;
 import com.sevtinge.hyperceiler.provision.text.style.TermsTitleSpan;
 import com.sevtinge.hyperceiler.provision.utils.OobeUtils;
-import com.sevtinge.hyperceiler.provision.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -134,7 +134,7 @@ public class TermsAndStatementAdapter extends BaseAdapter {
                 holder.provid.setVisibility(View.GONE);
             }
             ArrayList<PermissionItem> permissionItems = serviceItem.permissionItems;
-            if (permissionItems != null && permissionItems.size() > 0) {
+            if (permissionItems != null && !permissionItems.isEmpty()) {
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < permissionItems.size(); i++) {
                     PermissionItem permissionItem = permissionItems.get(i);
@@ -185,9 +185,7 @@ public class TermsAndStatementAdapter extends BaseAdapter {
                 } else {
                     holder.policy.setText(Html.fromHtml(serviceItem.privacyPolicy, Html.FROM_HTML_MODE_COMPACT));
                     holder.policy.setMovementMethod(LinkMovementMethod.getInstance());
-                    holder.policy.setOnClickListener(v -> {
-                        OobeUtils.startActivity(mContext, OobeUtils.getLicenseIntent("https://limestart.cn/"));
-                    });
+                    holder.policy.setOnClickListener(v -> OobeUtils.startActivity(mContext, OobeUtils.getLicenseIntent("https://limestart.cn/")));
                 }
             } else {
                 holder.policy.setVisibility(View.GONE);

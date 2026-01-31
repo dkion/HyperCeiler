@@ -14,26 +14,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.common.utils.search;
 
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.MiDeviceAppUtilsKt.isPad;
+
+import static com.sevtinge.hyperceiler.common.utils.LanguageHelper.appLanguages;
+import static com.sevtinge.hyperceiler.common.utils.LanguageHelper.localeFromAppLanguage;
+import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.Miui.isPad;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Color;
 import android.text.TextUtils;
 
 import com.sevtinge.hyperceiler.common.model.data.ModData;
-import com.sevtinge.hyperceiler.dashboard.DashboardFragment;
-import com.sevtinge.hyperceiler.hook.utils.ThreadPoolManager;
-import com.sevtinge.hyperceiler.hook.utils.log.AndroidLogUtils;
-import com.sevtinge.hyperceiler.hooker.securitycenter.OtherSettings;
-import com.sevtinge.hyperceiler.hooker.systemui.MediaCardSettings;
-import com.sevtinge.hyperceiler.hooker.systemui.TileSettings;
+import com.sevtinge.hyperceiler.common.utils.LanguageHelper;
 import com.sevtinge.hyperceiler.core.R;
+import com.sevtinge.hyperceiler.dashboard.DashboardFragment;
 import com.sevtinge.hyperceiler.hooker.AodFragment;
 import com.sevtinge.hyperceiler.hooker.CameraNewFragment;
 import com.sevtinge.hyperceiler.hooker.ContentExtensionFragment;
@@ -51,7 +51,7 @@ import com.sevtinge.hyperceiler.hooker.WeatherFragment;
 import com.sevtinge.hyperceiler.hooker.framework.CorePatchSettings;
 import com.sevtinge.hyperceiler.hooker.framework.DisplaySettings;
 import com.sevtinge.hyperceiler.hooker.framework.FreeFormSettings;
-import com.sevtinge.hyperceiler.hooker.framework.NetworkSettings;
+import com.sevtinge.hyperceiler.hooker.framework.MiPadSettings;
 import com.sevtinge.hyperceiler.hooker.framework.VolumeSettings;
 import com.sevtinge.hyperceiler.hooker.home.HomeDockSettings;
 import com.sevtinge.hyperceiler.hooker.home.HomeDrawerSettings;
@@ -60,23 +60,18 @@ import com.sevtinge.hyperceiler.hooker.home.HomeGestureSettings;
 import com.sevtinge.hyperceiler.hooker.home.HomeLayoutSettings;
 import com.sevtinge.hyperceiler.hooker.home.HomeOtherSettings;
 import com.sevtinge.hyperceiler.hooker.home.HomeRecentSettings;
-import com.sevtinge.hyperceiler.hooker.home.HomeTitleAnimSettings;
 import com.sevtinge.hyperceiler.hooker.home.HomeTitleSettings;
 import com.sevtinge.hyperceiler.hooker.home.HomeWidgetSettings;
-import com.sevtinge.hyperceiler.hooker.home.anim.HomeTitleAnim2Settings;
-import com.sevtinge.hyperceiler.hooker.home.anim.HomeTitleAnim3Settings;
-import com.sevtinge.hyperceiler.hooker.home.anim.HomeTitleAnim4Settings;
-import com.sevtinge.hyperceiler.hooker.home.anim.HomeTitleAnim5Settings;
-import com.sevtinge.hyperceiler.hooker.home.anim.HomeTitleAnim7Settings;
-import com.sevtinge.hyperceiler.hooker.home.anim.HomeTitleAnim8Settings;
-import com.sevtinge.hyperceiler.hooker.home.anim.HomeTitleAnim9Settings;
 import com.sevtinge.hyperceiler.hooker.securitycenter.ApplicationsSettings;
+import com.sevtinge.hyperceiler.hooker.securitycenter.OtherSettings;
 import com.sevtinge.hyperceiler.hooker.securitycenter.PrivacySafetySettings;
 import com.sevtinge.hyperceiler.hooker.securitycenter.SidebarSettings;
 import com.sevtinge.hyperceiler.hooker.systemui.ControlCenterSettings;
 import com.sevtinge.hyperceiler.hooker.systemui.LockScreenSettings;
+import com.sevtinge.hyperceiler.hooker.systemui.MediaCardSettings;
 import com.sevtinge.hyperceiler.hooker.systemui.NavigationSettings;
 import com.sevtinge.hyperceiler.hooker.systemui.StatusBarSettings;
+import com.sevtinge.hyperceiler.hooker.systemui.TileSettings;
 import com.sevtinge.hyperceiler.hooker.systemui.statusbar.BatteryStyleSettings;
 import com.sevtinge.hyperceiler.hooker.systemui.statusbar.DoubleLineNetworkSettings;
 import com.sevtinge.hyperceiler.hooker.systemui.statusbar.IconManageNewSettings;
@@ -85,12 +80,16 @@ import com.sevtinge.hyperceiler.hooker.systemui.statusbar.NetworkSpeedIndicatorS
 import com.sevtinge.hyperceiler.hooker.systemui.statusbar.NewClockIndicatorSettings;
 import com.sevtinge.hyperceiler.hooker.systemui.statusbar.StrongToastSettings;
 import com.sevtinge.hyperceiler.hooker.various.AOSPSettings;
+import com.sevtinge.hyperceiler.libhook.utils.api.ThreadPoolManager;
+import com.sevtinge.hyperceiler.libhook.utils.log.AndroidLog;
+import com.sevtinge.hyperceiler.libhook.utils.prefs.PrefsUtils;
 
 import org.xmlpull.v1.XmlPullParser;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 public class SearchHelper {
@@ -120,9 +119,9 @@ public class SearchHelper {
         // 系统框架页面相关
         parsePrefXmlForFramework(context, FreeFormSettings.class, R.xml.framework_freeform);
         parsePrefXmlForFramework(context, VolumeSettings.class, R.xml.framework_volume);
-        parsePrefXmlForFramework(context, NetworkSettings.class, R.xml.framework_phone);
+        parsePrefXmlForFramework(context, MiPadSettings.class, R.xml.various_mipad);
         parsePrefXmlForFramework(context, DisplaySettings.class, R.xml.framework_display);
-        parsePrefXmlForFramework(context, com.sevtinge.hyperceiler.hooker.framework.OtherSettings.class, R.xml.framework_other);
+        parsePrefXmlForFramework(context, OtherSettings.class, R.xml.framework_other);
         parsePrefXmlForFramework(context, CorePatchSettings.class, R.xml.framework_core_patch);
 
         // 系统界面页面相关
@@ -208,66 +207,6 @@ public class SearchHelper {
         parsePrefXml(context, HomeFolderSettings.class, R.xml.home_folder);
         parsePrefXml(context, HomeDrawerSettings.class, R.xml.home_drawer);
         parsePrefXml(context, HomeTitleSettings.class, R.xml.home_title);
-
-        parsePrefXml(context, HomeTitleAnimSettings.class, R.xml.home_title_anim, R.string.mihome, R.string.home_title);
-
-        parsePrefXml(context, HomeTitleAnim2Settings.class,
-                R.xml.home_title_anim_2,
-                R.string.mihome,
-                R.string.home_title,
-                R.string.home_title_custom_anim_param
-        );
-
-        parsePrefXml(context, HomeTitleAnim3Settings.class,
-                R.xml.home_title_anim_3,
-                R.string.mihome,
-                R.string.home_title,
-                R.string.home_title_custom_anim_param
-        );
-
-        parsePrefXml(context,
-                HomeTitleAnim4Settings.class,
-                R.xml.home_title_anim_4,
-                R.string.mihome,
-                R.string.home_title,
-                R.string.home_title_custom_anim_param);
-
-        parsePrefXml(context,
-                HomeTitleAnim5Settings.class,
-                R.xml.home_title_anim_5,
-                R.string.mihome,
-                R.string.home_title,
-                R.string.home_title_custom_anim_param);
-
-        parsePrefXml(context,
-                HomeTitleAnimSettings.class,
-                R.xml.home_title_anim_6,
-                R.string.mihome,
-                R.string.home_title,
-                R.string.home_title_custom_anim_param);
-
-        parsePrefXml(context,
-                HomeTitleAnim7Settings.class,
-                R.xml.home_title_anim_7,
-                R.string.mihome,
-                R.string.home_title,
-                R.string.home_title_custom_anim_param);
-
-        parsePrefXml(context,
-                HomeTitleAnim8Settings.class,
-                R.xml.home_title_anim_8,
-                R.string.mihome,
-                R.string.home_title,
-                R.string.home_title_custom_anim_param
-        );
-
-        parsePrefXml(context,
-                HomeTitleAnim9Settings.class,
-                R.xml.home_title_anim_9,
-                R.string.mihome,
-                R.string.home_title,
-                R.string.home_title_custom_anim_param
-        );
 
         parsePrefXmlForHome(context, HomeRecentSettings.class, R.xml.home_recent);
         parsePrefXmlForHome(context, HomeWidgetSettings.class, R.xml.home_widget);
@@ -375,9 +314,19 @@ public class SearchHelper {
         parsePrefXml(context, catPrefsFragment.getName(), xmlResId, internalId);
     }
 
+    private static Context createLocaleContext(Context base, Locale locale) {
+        Configuration config = new Configuration(base.getResources().getConfiguration());
+        config.setLocale(locale);
+        return base.createConfigurationContext(config);
+    }
+
     private static void parsePrefXml(Context context, String catPrefsFragment, int xmlResId, int... internalId) {
         ThreadPoolManager.getInstance().submit(() -> {
-            Resources res = context.getResources();
+            int selectedLang = Integer.parseInt(PrefsUtils.getSharedStringPrefs(context, "prefs_key_settings_app_language", "0"));
+            if (selectedLang < 0 || selectedLang >= appLanguages.length) selectedLang = 0;
+            Locale locale = localeFromAppLanguage(appLanguages[selectedLang]);
+            Context localeContext = createLocaleContext(context, locale);
+            Resources res = localeContext.getResources();
             try (XmlResourceParser xml = res.getXml(xmlResId)) {
                 int order = 0;
                 String location = null, locationPad = null;
@@ -441,7 +390,7 @@ public class SearchHelper {
                             }
                             order++;
                         } catch (Throwable t) {
-                            AndroidLogUtils.logE(TAG, "Failed to get xml keyword object!", t);
+                            AndroidLog.e(TAG, "Failed to get xml keyword object!", t);
                         }
                     }
                     eventType = xml.next();
@@ -454,7 +403,7 @@ public class SearchHelper {
                 }
 
             } catch (Throwable t) {
-                AndroidLogUtils.logE(TAG, "Failed to access XML resource!", t);
+                AndroidLog.e(TAG, "Failed to access XML resource!", t);
             }
         });
     }

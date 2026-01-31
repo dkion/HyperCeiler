@@ -14,11 +14,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hooker.various;
-
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.SystemSDKKt.isMoreHyperOSVersion;
 
 import android.content.ComponentName;
 import android.content.Intent;
@@ -26,8 +24,8 @@ import android.os.Bundle;
 
 import androidx.preference.Preference;
 
-import com.sevtinge.hyperceiler.dashboard.DashboardFragment;
 import com.sevtinge.hyperceiler.core.R;
+import com.sevtinge.hyperceiler.dashboard.DashboardFragment;
 
 public class AOSPSettings extends DashboardFragment {
     Preference mBattery;

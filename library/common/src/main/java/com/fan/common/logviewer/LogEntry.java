@@ -1,22 +1,50 @@
+/*
+ * This file is part of HyperCeiler.
+
+ * HyperCeiler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
+ */
 package com.fan.common.logviewer;
+
+import android.annotation.SuppressLint;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 public class LogEntry {
-    private long mTimestamp;
-    private String mLevel;
-    private String mModule;
-    private String mMessage;
-    private String mTag;
-    private boolean mNewLine;
+    private final long mTimestamp;
+    private final String mLevel;
+    private final String mModule;
+    private final String mMessage;
+    private final String mTag;
+    private final boolean mNewLine;
 
+    @SuppressLint("ConstantLocale")
     private static final SimpleDateFormat sTimeFormat =
         new SimpleDateFormat("HH:mm:ss.SSS", Locale.getDefault());
+    @SuppressLint("ConstantLocale")
+    private static final SimpleDateFormat sDateTimeFormat =
+        new SimpleDateFormat("yy-MM-dd HH:mm:ss", Locale.getDefault());
 
     public LogEntry(String level, String module, String message, String tag, boolean newLine) {
-        this.mTimestamp = System.currentTimeMillis();
+        this(System.currentTimeMillis(), level, module, message, tag, newLine);
+    }
+
+    public LogEntry(long timestamp, String level, String module, String message, String tag, boolean newLine) {
+        this.mTimestamp = timestamp;
         this.mLevel = level;
         this.mModule = module;
         this.mMessage = message;
@@ -50,7 +78,19 @@ public class LogEntry {
     }
 
     public String getFormattedTime() {
-        return sTimeFormat.format(new Date(mTimestamp));
+        Date logDate = new Date(mTimestamp);
+        long now = System.currentTimeMillis();
+        // 如果是今天，只显示时间；否则显示日期+时间
+        if (isSameDay(logDate, now)) {
+            return sTimeFormat.format(logDate);
+        } else {
+            return sDateTimeFormat.format(logDate);
+        }
+    }
+
+    private static boolean isSameDay(Date d1, long currentTimeMillis) {
+        SimpleDateFormat dayFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+        return dayFormat.format(d1).equals(dayFormat.format(new Date(currentTimeMillis)));
     }
 
     public int getColor() {

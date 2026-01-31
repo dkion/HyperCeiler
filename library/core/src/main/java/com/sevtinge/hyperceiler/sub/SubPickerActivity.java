@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.sub;
 
@@ -46,8 +46,9 @@ import com.sevtinge.hyperceiler.common.model.adapter.AppDataAdapter;
 import com.sevtinge.hyperceiler.common.model.data.AppData;
 import com.sevtinge.hyperceiler.common.model.data.AppDataManager;
 import com.sevtinge.hyperceiler.core.R;
-import com.sevtinge.hyperceiler.hook.utils.BitmapUtils;
-import com.sevtinge.hyperceiler.hook.utils.prefs.PrefsUtils;
+import com.sevtinge.hyperceiler.libhook.utils.api.BitmapUtils;
+import com.sevtinge.hyperceiler.libhook.utils.log.AndroidLog;
+import com.sevtinge.hyperceiler.libhook.utils.prefs.PrefsUtils;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -343,7 +344,7 @@ public class SubPickerActivity extends AppCompatActivity
         mCurrentAppDataList.addAll(filteredList);
         mAppListAdapter.setData(mCurrentAppDataList);
 
-        Log.d(TAG, "filterAppList: filtered " + filteredList.size() + " items for: " + searchTerm);
+        AndroidLog.d(TAG, "filterAppList: filtered " + filteredList.size() + " items for: " + searchTerm);
     }
 
     @Override

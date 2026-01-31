@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui.base.controlcenter
 
@@ -30,7 +30,7 @@ object PublicClass {
         loadClassOrNull("com.android.systemui.statusbar.notification.mediacontrol.MiuiMediaViewControllerImpl")
     }
     val seekBarObserverNew by lazy {
-        loadClassOrNull("com.android.systemui.statusbar.notification.mediacontrol.MiuiMediaViewControllerImpl\$seekBarObserver$1")
+        loadClassOrNull($$"com.android.systemui.statusbar.notification.mediacontrol.MiuiMediaViewControllerImpl$seekBarObserver$1")
     }
     val miuiMediaNotificationControllerImpl by lazy {
         loadClassOrNull("com.android.systemui.statusbar.notification.mediacontrol.MiuiMediaNotificationControllerImpl")
@@ -56,7 +56,7 @@ object PublicClass {
 
     val seekBarObserver by lazy {
         loadClassOrNull("com.android.systemui.media.controls.ui.binder.SeekBarObserver")
-            ?: loadClassOrNull("com.android.systemui.statusbar.notification.mediacontrol.MiuiMediaViewControllerImpl\$seekBarObserver$1")
+            ?: loadClassOrNull($$"com.android.systemui.statusbar.notification.mediacontrol.MiuiMediaViewControllerImpl$seekBarObserver$1")
             ?: loadClassOrNull("com.android.systemui.media.controls.models.player.SeekBarObserver")
     }
 

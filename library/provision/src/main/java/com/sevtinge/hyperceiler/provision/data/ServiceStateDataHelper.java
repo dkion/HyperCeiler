@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.provision.data;
 
@@ -27,7 +27,7 @@ import java.util.HashMap;
 
 public class ServiceStateDataHelper {
 
-    private Context mContext;
+    private final Context mContext;
 
     public ArrayList<ServiceItem> mServiceItems = new ArrayList<>();
     public HashMap<String, Integer> mPrivacyTypeMap = new HashMap<>();

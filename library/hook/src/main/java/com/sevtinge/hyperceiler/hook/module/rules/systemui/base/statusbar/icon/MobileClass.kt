@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui.base.statusbar.icon
 
@@ -28,7 +28,7 @@ object MobileClass {
         loadClass("com.android.systemui.statusbar.pipeline.mobile.ui.binder.MiuiMobileIconBinder")
     }
     val mOperatorConfig by lazy {
-        loadClass("com.miui.interfaces.IOperatorCustomizedPolicy\$OperatorConfig")
+        loadClass($$"com.miui.interfaces.IOperatorCustomizedPolicy$OperatorConfig")
     }
     val miuiCellularIconVM by lazy {
         loadClass("com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.MiuiCellularIconVM")

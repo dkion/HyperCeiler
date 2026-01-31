@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hooker.systemui;
 
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.MiDeviceAppUtilsKt.isPad;
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.SystemSDKKt.isHyperOSVersion;
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.SystemSDKKt.isMoreAndroidVersion;
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.SystemSDKKt.isMoreSmallVersion;
+import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.Miui.isPad;
+import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.isHyperOSVersion;
+import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.isMoreAndroidVersion;
+import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.isMoreSmallVersion;
 
 import android.content.ComponentName;
 import android.content.pm.PackageManager;
@@ -30,11 +30,11 @@ import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 import androidx.preference.SwitchPreference;
 
-import com.sevtinge.hyperceiler.dashboard.DashboardFragment;
-import com.sevtinge.hyperceiler.hook.utils.ToastHelper;
-import com.sevtinge.hyperceiler.hook.utils.prefs.PrefsUtils;
-import com.sevtinge.hyperceiler.hook.utils.shell.ShellPackageManager;
 import com.sevtinge.hyperceiler.core.R;
+import com.sevtinge.hyperceiler.dashboard.DashboardFragment;
+import com.sevtinge.hyperceiler.libhook.utils.api.ToastHelper;
+import com.sevtinge.hyperceiler.libhook.utils.prefs.PrefsUtils;
+import com.sevtinge.hyperceiler.libhook.utils.shell.ShellPackageManager;
 
 import fan.preference.DropDownPreference;
 import fan.preference.SeekBarPreferenceCompat;

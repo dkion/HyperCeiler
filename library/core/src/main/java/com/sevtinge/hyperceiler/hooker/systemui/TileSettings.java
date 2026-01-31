@@ -14,12 +14,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hooker.systemui;
 
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.SystemSDKKt.getWhoAmI;
-import static com.sevtinge.hyperceiler.hook.utils.shell.ShellUtils.rootExecCmd;
+import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.getWhoAmI;
+import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.isMoreHyperOSVersion;
+import static com.sevtinge.hyperceiler.libhook.utils.shell.ShellUtils.rootExecCmd;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -28,11 +29,11 @@ import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 import androidx.preference.SwitchPreference;
 
-import com.sevtinge.hyperceiler.dashboard.DashboardFragment;
-import com.sevtinge.hyperceiler.hook.module.base.tool.AppsTool;
-import com.sevtinge.hyperceiler.hook.utils.ThreadPoolManager;
-import com.sevtinge.hyperceiler.hook.utils.devicesdk.TelephonyManager;
 import com.sevtinge.hyperceiler.core.R;
+import com.sevtinge.hyperceiler.dashboard.DashboardFragment;
+import com.sevtinge.hyperceiler.libhook.utils.api.TelephonyManager;
+import com.sevtinge.hyperceiler.libhook.utils.api.ThreadPoolManager;
+import com.sevtinge.hyperceiler.libhook.utils.hookapi.tool.AppsTool;
 
 import fan.preference.DropDownPreference;
 import fan.preference.SeekBarPreferenceCompat;
@@ -69,12 +70,16 @@ public class TileSettings extends DashboardFragment implements Preference.OnPref
             mMaxBrightness = Integer.parseInt(rootExecCmd("cat /sys/class/backlight/panel0-backlight/max_brightness"));
         } catch (Exception ignore) {}
 
-        mTaplus.setOnPreferenceChangeListener(
+        if (!isMoreHyperOSVersion(3f)) {
+            mTaplus.setOnPreferenceChangeListener(
                 (preference, o) -> {
                     killTaplus();
                     return true;
                 }
-        );
+            );
+        } else {
+            setFuncHint(mTaplus, 1);
+        }
 
         if (getWhoAmI().equals("root") && mMaxBrightness > 2048) {
             mSunshineModeHigh.setVisible(true);
@@ -89,7 +94,7 @@ public class TileSettings extends DashboardFragment implements Preference.OnPref
 
         mRoundedRectRadius.setVisible(getSharedPreferences().getBoolean("prefs_key_system_ui_control_center_rounded_rect", false));
         mFiveG.setVisible(TelephonyManager.getDefault().isFiveGCapable());
-        mSunshineModeHighBrightness.setVisible(Integer.parseInt(getSharedPreferences().getString("prefs_key_system_control_center_sunshine_new_mode_high", "0")) == 3);;
+        mSunshineModeHighBrightness.setVisible(Integer.parseInt(getSharedPreferences().getString("prefs_key_system_control_center_sunshine_new_mode_high", "0")) == 3);
 
         mRoundedRect.setOnPreferenceChangeListener(this);
 

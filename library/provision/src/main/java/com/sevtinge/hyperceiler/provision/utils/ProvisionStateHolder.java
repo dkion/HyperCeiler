@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.provision.utils;
 
@@ -28,11 +28,9 @@ public class ProvisionStateHolder {
     public static ProvisionStateHolder getInstance() {
         if (sInstance == null) {
             synchronized (ProvisionStateHolder.class) {
-                try {
-                    if (sInstance == null) {
-                        sInstance = new ProvisionStateHolder();
-                    }
-                } finally {}
+                if (sInstance == null) {
+                    sInstance = new ProvisionStateHolder();
+                }
             }
         }
         return sInstance;

@@ -7,18 +7,18 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        minSdk = 34
+        minSdk = 35
     }
 
     buildTypes {
         release {
-            consumerProguardFiles(libs.versions.proguard.rules.get())
+            consumerProguardFiles("proguard-rules.pro")
         }
         create("beta") {
-            consumerProguardFiles(libs.versions.proguard.rules.get())
+            consumerProguardFiles("proguard-rules.pro")
         }
         create("canary") {
-            consumerProguardFiles(libs.versions.proguard.rules.get())
+            consumerProguardFiles("proguard-rules.pro")
         }
     }
 }
@@ -30,5 +30,5 @@ java {
 }
 
 dependencies {
-    api(projects.library.common)
+    api(libs.bundles.miuix)
 }

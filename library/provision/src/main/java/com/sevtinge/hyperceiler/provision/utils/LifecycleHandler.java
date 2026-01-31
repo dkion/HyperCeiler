@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.provision.utils;
 
@@ -28,18 +28,16 @@ import java.util.LinkedList;
 
 public class LifecycleHandler {
 
-    private Deque<Activity> mActivitieStack = new LinkedList();
+    private final Deque<Activity> mActivitieStack = new LinkedList();
 
     private static volatile LifecycleHandler singleton;
 
     public static LifecycleHandler getInstance() {
         if (singleton == null) {
             synchronized (LifecycleHandler.class) {
-                try {
-                    if (singleton == null) {
-                        singleton = new LifecycleHandler();
-                    }
-                } finally {}
+                if (singleton == null) {
+                    singleton = new LifecycleHandler();
+                }
             }
         }
         return singleton;

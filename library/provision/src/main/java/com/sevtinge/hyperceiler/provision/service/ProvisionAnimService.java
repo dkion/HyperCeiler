@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.provision.service;
 
@@ -38,7 +38,7 @@ public class ProvisionAnimService extends Service {
     public static HashMap<String, Integer> FAST_ANIM_MAP = new HashMap<>();
     IProvisionAnim.Stub stub = new IProvisionAnim.Stub() {
 
-        private RemoteCallbackList<IAnimCallback> mListeners = new RemoteCallbackList<>();
+        private final RemoteCallbackList<IAnimCallback> mListeners = new RemoteCallbackList<>();
 
         @Override
         public IBinder asBinder() {

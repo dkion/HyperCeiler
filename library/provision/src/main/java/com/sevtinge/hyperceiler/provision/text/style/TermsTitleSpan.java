@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.provision.text.style;
 
@@ -30,8 +30,8 @@ import com.sevtinge.hyperceiler.provision.utils.OobeUtils;
 
 public class TermsTitleSpan extends ClickableSpan {
 
-    private Context mContext;
-    private int mHiperlinkType;
+    private final Context mContext;
+    private final int mHiperlinkType;
 
     public TermsTitleSpan(Context context, int type) {
         mContext = context;

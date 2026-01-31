@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.utils.extension
 
@@ -32,7 +32,7 @@ fun Context.getIdByName(
 
 @StringRes
 fun Context.getStringIdByName(name: String): Int = getIdByName(name, "string")
-fun Context.getString(name: String): String? = getString(getStringIdByName(name))
+fun Context.getString(name: String): String = getString(getStringIdByName(name))
 
 @DrawableRes
 fun Context.getDrawableIdByName(name: String): Int = getIdByName(name, "drawable")

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.dashboard;
 
@@ -36,8 +36,8 @@ import androidx.preference.Preference;
 
 import com.sevtinge.hyperceiler.common.utils.DialogHelper;
 import com.sevtinge.hyperceiler.core.R;
-import com.sevtinge.hyperceiler.hook.utils.log.AndroidLogUtils;
-import com.sevtinge.hyperceiler.hook.utils.pkg.CheckModifyUtils;
+import com.sevtinge.hyperceiler.libhook.utils.log.AndroidLog;
+import com.sevtinge.hyperceiler.libhook.utils.pkg.CheckModifyUtils;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -101,7 +101,7 @@ public class DashboardFragment extends SettingsPreferenceFragment {
                 eventType = xml.next();
             }
         } catch (Exception e) {
-            AndroidLogUtils.logE(TAG, "Failed to access XML resource!", e);
+            AndroidLog.e(TAG, "Failed to access XML resource!", e);
         }
         return null;
     }
@@ -112,7 +112,7 @@ public class DashboardFragment extends SettingsPreferenceFragment {
             declaredField.setAccessible(true);
             declaredField.set(this, false);
         } catch (Exception e) {
-            AndroidLogUtils.logE(TAG, "setOverlayMode error", e);
+            AndroidLog.e(TAG, "setOverlayMode error", e);
         }
     }
 
@@ -124,10 +124,10 @@ public class DashboardFragment extends SettingsPreferenceFragment {
             case 2 -> p.setSummary(R.string.supported_system_func);
             case 3 -> p.setSummary(R.string.feature_doing_func);
             default -> throw new IllegalStateException("Unexpected value: " + value);
-        };
+        }
     }
 
-    public void setHide(Preference p, boolean b) {
+    public void setPreVisible(Preference p, boolean b) {
         if (!b) {
             cleanKey(p.getKey());
             p.setVisible(false);

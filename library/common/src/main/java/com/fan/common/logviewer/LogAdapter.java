@@ -1,5 +1,24 @@
+/*
+ * This file is part of HyperCeiler.
+
+ * HyperCeiler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
+ */
 package com.fan.common.logviewer;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -15,9 +34,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fan.common.R;
+import com.sevtinge.hyperceiler.core.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,6 +47,7 @@ import fan.recyclerview.card.CardGroupAdapter;
 
 public class LogAdapter extends CardGroupAdapter<LogAdapter.LogViewHolder>
         implements Filterable {
+    private Context mContext;
 
     // 数据相关
     private List<LogEntry> mOriginalLogEntries;
@@ -36,8 +57,8 @@ public class LogAdapter extends CardGroupAdapter<LogAdapter.LogViewHolder>
     private String mSearchKeyword = "";
     private String mSelectedLevel = "ALL";
     private String mSelectedModule = "ALL";
-    private List<String> mLevelList = new ArrayList<>();
-    private List<String> mModuleList = new ArrayList<>();
+    private final List<String> mLevelList = new ArrayList<>();
+    private final List<String> mModuleList = new ArrayList<>();
 
     // 颜色配置
     private static final int sSearchHighlightColor = Color.RED;
@@ -45,10 +66,14 @@ public class LogAdapter extends CardGroupAdapter<LogAdapter.LogViewHolder>
 
     // 监听器
     private OnFilterChangeListener mFilterChangeListener;
+    private OnLogItemClickListener mLogItemClickListener;
 
-    public LogAdapter(List<LogEntry> logEntries) {
+    public LogAdapter(Context context, List<LogEntry> logEntries) {
+        mContext = context;
         mOriginalLogEntries = new ArrayList<>(logEntries);
-        mFilteredLogEntries = new ArrayList<>(logEntries);
+        // 倒序显示，最新的日志在最上面
+        Collections.reverse(mOriginalLogEntries);
+        mFilteredLogEntries = new ArrayList<>(mOriginalLogEntries);
         // 提取所有可用的模块和级别
         extractAvailableList();
     }
@@ -58,8 +83,8 @@ public class LogAdapter extends CardGroupAdapter<LogAdapter.LogViewHolder>
         mLevelList.clear();
         mModuleList.clear();
 
-        mLevelList.add("全部");
-        mModuleList.add("全部");
+        mLevelList.add(mContext.getString(R.string.log_filter_all));
+        mModuleList.add(mContext.getString(R.string.log_filter_all));
 
         Set<String> levelSet = new HashSet<>();
         Set<String> moduleSet = new HashSet<>();
@@ -67,15 +92,15 @@ public class LogAdapter extends CardGroupAdapter<LogAdapter.LogViewHolder>
             if (entry != null) {
                 if (entry.getLevel() != null) {
                     switch (entry.getLevel()) {
-                        case "V" -> levelSet.add("Verbose");
-                        case "D" -> levelSet.add("Debug");
-                        case "I" -> levelSet.add("Info");
-                        case "W" -> levelSet.add("Warn");
-                        case "E" -> levelSet.add("Error");
+                        case "V" -> levelSet.add(mContext.getString(R.string.log_level_verbose));
+                        case "D" -> levelSet.add(mContext.getString(R.string.log_level_debug));
+                        case "I" -> levelSet.add(mContext.getString(R.string.log_level_info));
+                        case "W" -> levelSet.add(mContext.getString(R.string.log_level_warn));
+                        case "E" -> levelSet.add(mContext.getString(R.string.log_level_error));
                     }
                 }
-                if (entry.getModule() != null) {
-                    moduleSet.add(entry.getModule());
+                if (entry.getTag() != null) {
+                    moduleSet.add(entry.getTag());
                 }
             }
         }
@@ -102,6 +127,8 @@ public class LogAdapter extends CardGroupAdapter<LogAdapter.LogViewHolder>
         }
 
         mOriginalLogEntries = new ArrayList<>(newLogEntries);
+        // 倒序显示，最新的日志在最上面
+        Collections.reverse(mOriginalLogEntries);
         extractAvailableList();
         performFiltering();
     }
@@ -118,12 +145,12 @@ public class LogAdapter extends CardGroupAdapter<LogAdapter.LogViewHolder>
 
             // 模块过滤
             boolean moduleMatch = "ALL".equals(mSelectedModule) ||
-                    mSelectedModule.equals(entry.getModule());
+                    mSelectedModule.equals(entry.getTag());
 
             // 搜索过滤
             boolean searchMatch = mSearchKeyword.isEmpty() ||
                     entry.getMessage().toLowerCase().contains(searchLower) ||
-                    entry.getModule().toLowerCase().contains(searchLower);
+                    entry.getTag().toLowerCase().contains(searchLower);
 
             if (levelMatch && moduleMatch && searchMatch) {
                 filteredList.add(entry);
@@ -153,14 +180,27 @@ public class LogAdapter extends CardGroupAdapter<LogAdapter.LogViewHolder>
     // 级别过滤
     public void setLevelFilter(String level) {
         if (level != null) {
-            switch (level) {
-                case "全部" -> mSelectedLevel = "ALL";
-                case "Verbose" -> mSelectedLevel = "V";
-                case "Debug" -> mSelectedLevel = "D";
-                case "Info" -> mSelectedLevel = "I";
-                case "Warn" -> mSelectedLevel = "W";
-                case "Error" -> mSelectedLevel = "E";
-                default -> mSelectedLevel = "ALL";
+            String all = mContext.getString(R.string.log_filter_all);
+            String verbose = mContext.getString(R.string.log_level_verbose);
+            String debug = mContext.getString(R.string.log_level_debug);
+            String info = mContext.getString(R.string.log_level_info);
+            String warn = mContext.getString(R.string.log_level_warn);
+            String error = mContext.getString(R.string.log_level_error);
+
+            if (level.equals(all)) {
+                mSelectedLevel = "ALL";
+            } else if (level.equals(verbose)) {
+                mSelectedLevel = "V";
+            } else if (level.equals(debug)) {
+                mSelectedLevel = "D";
+            } else if (level.equals(info)) {
+                mSelectedLevel = "I";
+            } else if (level.equals(warn)) {
+                mSelectedLevel = "W";
+            } else if (level.equals(error)) {
+                mSelectedLevel = "E";
+            } else {
+                mSelectedLevel = "ALL";
             }
         }
         performFiltering();
@@ -169,7 +209,8 @@ public class LogAdapter extends CardGroupAdapter<LogAdapter.LogViewHolder>
     // 模块过滤
     public void setModuleFilter(String module) {
         if (module != null) {
-            mSelectedModule = module.equals("全部") ? "ALL" : module;
+            String all = mContext.getString(R.string.log_filter_all);
+            mSelectedModule = module.equals(all) ? "ALL" : module;
         }
         performFiltering();
     }
@@ -187,11 +228,16 @@ public class LogAdapter extends CardGroupAdapter<LogAdapter.LogViewHolder>
         mFilterChangeListener = listener;
     }
 
+    // 设置日志条目点击监听器
+    public void setOnLogItemClickListener(OnLogItemClickListener listener) {
+        mLogItemClickListener = listener;
+    }
+
     @NonNull
     @Override
     public LogViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_log, parent, false);
+                .inflate(com.fan.common.R.layout.item_log, parent, false);
         return new LogViewHolder(view);
     }
 
@@ -210,6 +256,12 @@ public class LogAdapter extends CardGroupAdapter<LogAdapter.LogViewHolder>
         if (position >= 0 && position < mFilteredLogEntries.size()) {
             LogEntry logEntry = mFilteredLogEntries.get(position);
             holder.bind(logEntry, mSearchKeyword);
+            holder.itemView.setOnClickListener(v -> {
+                AnimHelper.addItemPressEffect(v);
+                if (mLogItemClickListener != null) {
+                    mLogItemClickListener.onLogItemClick(logEntry);
+                }
+            });
         }
     }
 
@@ -248,13 +300,12 @@ public class LogAdapter extends CardGroupAdapter<LogAdapter.LogViewHolder>
 
         public LogViewHolder(@NonNull View itemView) {
             super(itemView);
-            mLevelIndicator = itemView.findViewById(R.id.level_indicator);
+            mLevelIndicator = itemView.findViewById(com.fan.common.R.id.level_indicator);
 
-            mTimeTextView = itemView.findViewById(R.id.textTime);
-            mLevelTextView = itemView.findViewById(R.id.textLevel);
-            mModuleTextView = itemView.findViewById(R.id.textModule);
-            mMessageTextView = itemView.findViewById(R.id.textMessage);
-            itemView.setOnClickListener(AnimHelper::addItemPressEffect);
+            mTimeTextView = itemView.findViewById(com.fan.common.R.id.textTime);
+            mLevelTextView = itemView.findViewById(com.fan.common.R.id.textLevel);
+            mModuleTextView = itemView.findViewById(com.fan.common.R.id.textModule);
+            mMessageTextView = itemView.findViewById(com.fan.common.R.id.textMessage);
         }
 
         public void bind(LogEntry logEntry, String searchKeyword) {
@@ -268,7 +319,7 @@ public class LogAdapter extends CardGroupAdapter<LogAdapter.LogViewHolder>
             //mLevelTextView.setTextColor(logEntry.getColor());
 
             // 设置模块
-            mModuleTextView.setText(logEntry.getModule());
+            mModuleTextView.setText(logEntry.getTag());
 
             // 设置消息（支持搜索高亮和换行）
             String message = logEntry.getMessage();
@@ -316,5 +367,10 @@ public class LogAdapter extends CardGroupAdapter<LogAdapter.LogViewHolder>
     // 过滤变化监听器接口
     public interface OnFilterChangeListener {
         void onFilterChanged(int filteredCount, int totalCount);
+    }
+
+    // 日志条目点击监听器接口
+    public interface OnLogItemClickListener {
+        void onLogItemClick(LogEntry logEntry);
     }
 }

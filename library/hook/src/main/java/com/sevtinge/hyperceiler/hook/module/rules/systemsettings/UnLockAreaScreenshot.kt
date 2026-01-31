@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hook.module.rules.systemsettings
 
@@ -23,7 +23,7 @@ import com.sevtinge.hyperceiler.hook.module.base.BaseHook
 object UnLockAreaScreenshot : BaseHook() {
     override fun init() {
         findAndHookMethod(
-            "com.android.settings.MiuiShortcut\$System", "supportPartialScreenShot",
+            $$"com.android.settings.MiuiShortcut$System", "supportPartialScreenShot",
             object : MethodHook() {
                 override fun before(param: MethodHookParam?) {
                     param?.result = true

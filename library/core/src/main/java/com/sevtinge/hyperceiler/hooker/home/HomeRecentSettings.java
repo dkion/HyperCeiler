@@ -14,23 +14,22 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hooker.home;
 
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.MiDeviceAppUtilsKt.isPad;
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.SystemSDKKt.isMoreHyperOSVersion;
+import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.Miui.isPad;
+import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.isMoreHyperOSVersion;
 import static com.sevtinge.hyperceiler.sub.SubPickerActivity.ALL_APPS_MODE;
-import static com.sevtinge.hyperceiler.sub.SubPickerActivity.LAUNCHER_MODE;
 
 import android.content.Intent;
 
 import androidx.preference.Preference;
 import androidx.preference.SwitchPreference;
 
+import com.sevtinge.hyperceiler.core.R;
 import com.sevtinge.hyperceiler.dashboard.DashboardFragment;
 import com.sevtinge.hyperceiler.sub.SubPickerActivity;
-import com.sevtinge.hyperceiler.core.R;
 
 import fan.preference.SeekBarPreferenceCompat;
 
@@ -70,7 +69,7 @@ public class HomeRecentSettings extends DashboardFragment {
             setFuncHint(mShowLaunch, 1);
             setFuncHint(mHideWorldCirculate, isPad() ? 1 : 2);
             setFuncHint(mHideFreeform, 1);
-            setHide(mUnlockPin, false);
+            setPreVisible(mUnlockPin, false);
         }
 
         mHideRecentCard.setOnPreferenceClickListener(

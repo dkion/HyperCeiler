@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.common.prefs;
 
@@ -35,9 +35,9 @@ import androidx.annotation.Nullable;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
 
+import com.sevtinge.hyperceiler.common.utils.SettingLauncherHelper;
 import com.sevtinge.hyperceiler.core.R;
 import com.sevtinge.hyperceiler.dashboard.SubSettings;
-import com.sevtinge.hyperceiler.common.utils.SettingLauncherHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class RecommendPreference extends Preference
     private boolean mNeedClear;
     private String mRecommendTips;
     private TextView mRecommendTipsTv;
-    private List<RelativeLayout> mItemList = new ArrayList<>();
+    private final List<RelativeLayout> mItemList = new ArrayList<>();
     private LinearLayout mLinearLayout;
 
     public RecommendPreference(@NonNull Context context) {

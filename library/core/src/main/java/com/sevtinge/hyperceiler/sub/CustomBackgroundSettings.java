@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.sub;
 
@@ -26,7 +26,7 @@ import androidx.preference.SwitchPreference;
 
 import com.sevtinge.hyperceiler.core.R;
 import com.sevtinge.hyperceiler.dashboard.SettingsPreferenceFragment;
-import com.sevtinge.hyperceiler.hook.utils.prefs.PrefsUtils;
+import com.sevtinge.hyperceiler.libhook.utils.prefs.PrefsUtils;
 
 import fan.pickerwidget.color.HSLColor;
 import fan.preference.ColorPickerPreference;

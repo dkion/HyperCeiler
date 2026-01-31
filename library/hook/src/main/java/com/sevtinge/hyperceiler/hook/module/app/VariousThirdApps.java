@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.module.app;
 
@@ -52,7 +52,7 @@ public class VariousThirdApps extends BaseModule {
         if (mPrefsMap.getBoolean("various_phrase_clipboardlist")) {
             if (isInputMethod(mPackageName)) {
                 initHook(new LoadInputMethodDex());
-                initHook(new ClipboardLimit().onApplication());
+                initHook(new ClipboardLimit());
             }
         }
         initHook(new UnlockIme(), mPrefsMap.getBoolean("various_unlock_ime") && isInputMethod(mPackageName));

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui.plugin.systemui
 
@@ -95,7 +95,7 @@ object StartCollpasedColumnPress {
         }
 
         miuiVolumeDialogMotion.methodFinder().apply {
-            filterByName("lambda\$processExpandTouch\$1")
+            filterByName($$"lambda$processExpandTouch$1")
                 .first().createBeforeHook {
                     it.thisObject.setObjectField("mIsExpandButton",true)
                 }
@@ -107,7 +107,7 @@ object StartCollpasedColumnPress {
             }.first().createAfterHook {
                 val mSeekBarOnclickListener = it.thisObject.getObjectField("mSeekBarOnclickListener")
                 val mSeekBarAnimListener = it.thisObject.getObjectField("mSeekBarAnimListener")!!
-                val volumePanelViewController = mSeekBarAnimListener.getObjectField("this\$0")!!
+                val volumePanelViewController = mSeekBarAnimListener.getObjectField($$"this$0")!!
                 val mVolumeView = volumePanelViewController.getObjectFieldAs<View>("mVolumeView")
 
                 it.thisObject.setLongField("mCurrentMS",0L)

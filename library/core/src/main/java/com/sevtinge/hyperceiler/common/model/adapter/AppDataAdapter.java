@@ -10,11 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sevtinge.hyperceiler.common.model.data.AppData;
 import com.sevtinge.hyperceiler.common.model.adapter.AppDataAdapter.AppViewHolder;
+import com.sevtinge.hyperceiler.common.model.data.AppData;
 import com.sevtinge.hyperceiler.common.model.data.AppEditManager;
 import com.sevtinge.hyperceiler.core.R;
-import com.sevtinge.hyperceiler.hook.utils.prefs.PrefsUtils;
+import com.sevtinge.hyperceiler.libhook.utils.prefs.PrefsUtils;
 import com.sevtinge.hyperceiler.sub.SubPickerActivity;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class AppDataAdapter extends CardGroupAdapter<AppViewHolder> {
     private final int mMode;
     private final AppEditManager mEditManager;
 
-    private List<AppData> mAppDataList; // 单一数据源
+    private final List<AppData> mAppDataList; // 单一数据源
     private OnItemClickListener mOnItemClickListener;
 
     public AppDataAdapter(List<AppData> appInfoList, String key, int mode) {

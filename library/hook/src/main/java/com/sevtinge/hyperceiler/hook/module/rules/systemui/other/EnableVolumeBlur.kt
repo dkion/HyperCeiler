@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui.other
 
@@ -67,7 +67,7 @@ class EnableVolumeBlur : BaseHook() {
 
     private fun hookClassInPlugin(afterGetClassLoader: (classLoader: ClassLoader) -> Unit) {
         val pluginHandlerClass = findClassIfExists(
-            "com.android.systemui.shared.plugins.PluginInstanceManager\$PluginHandler"
+            $$"com.android.systemui.shared.plugins.PluginInstanceManager$PluginHandler"
         )
         if (pluginHandlerClass != null) {
             XposedBridge.hookAllMethods(pluginHandlerClass, "handleLoadPlugin",

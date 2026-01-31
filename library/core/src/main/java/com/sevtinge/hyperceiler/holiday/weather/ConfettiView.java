@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.holiday.weather;
 
@@ -113,8 +113,7 @@ public class ConfettiView extends View implements View.OnLayoutChangeListener {
                                int i7) {
         if (terminated) {
             final ViewParent parent = getParent();
-            if (parent != null && parent instanceof ViewGroup) {
-                final ViewGroup vg = (ViewGroup) parent;
+            if (parent != null && parent instanceof ViewGroup vg) {
                 vg.removeViewInLayout(this);
                 vg.removeOnLayoutChangeListener(this);
                 vg.invalidate();

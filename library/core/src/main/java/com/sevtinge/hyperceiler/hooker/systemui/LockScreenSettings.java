@@ -14,13 +14,14 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hooker.systemui;
 
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.MiDeviceAppUtilsKt.isPad;
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.SystemSDKKt.isMoreHyperOSVersion;
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.SystemSDKKt.isMoreSmallVersion;
+
+import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.Miui.isPad;
+import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.isMoreHyperOSVersion;
+import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.isMoreSmallVersion;
 
 import androidx.preference.SwitchPreference;
 
@@ -54,8 +55,8 @@ public class LockScreenSettings extends DashboardFragment {
             setFuncHint(mHideRightButton, 1);
             setFuncHint(mBlurButton, 1);
         } else if (isMoreHyperOSVersion(3f)) {
-            setHide(mHideLeftButtonNew, false);
-            setHide(mHideRightButton, false);
+            setPreVisible(mHideLeftButtonNew, false);
+            setPreVisible(mHideRightButton, false);
             setFuncHint(mChangeCV, 1);
             setFuncHint(mAnim, 1);
         } else if (isMoreSmallVersion(200, 2f)) {

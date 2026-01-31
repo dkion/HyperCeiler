@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.main.page;
 
-import static com.sevtinge.hyperceiler.hook.utils.PropUtils.getProp;
-import static com.sevtinge.hyperceiler.hook.utils.PropUtils.getPropSu;
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.DeviceSDKKt.getDeviceToken;
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.SystemSDKKt.getSystemVersionIncremental;
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.SystemSDKKt.isMoreAndroidVersion;
+import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.Hardware.getDeviceToken;
+import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.getSystemVersionIncremental;
+import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.isMoreAndroidVersion;
+import static com.sevtinge.hyperceiler.libhook.utils.api.PropUtils.getProp;
+import static com.sevtinge.hyperceiler.libhook.utils.api.PropUtils.getPropSu;
 
 import android.content.res.Configuration;
 import android.graphics.Rect;
@@ -197,7 +197,7 @@ public class AboutPage extends DashboardFragment
     @Override
     public void onStart() {
         super.onStart();
-        if (mHandler != null && !isReboot) {
+        if (!isReboot) {
             startRuntimeShader();
         }
         isReboot = false;

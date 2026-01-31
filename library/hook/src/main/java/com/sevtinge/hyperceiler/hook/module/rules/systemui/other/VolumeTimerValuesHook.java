@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui.other;
 
@@ -24,7 +24,7 @@ import com.sevtinge.hyperceiler.hook.module.base.BaseHook;
 
 public class VolumeTimerValuesHook extends BaseHook {
 
-    private static ClassLoader pluginLoader = null;
+    private static final ClassLoader pluginLoader = null;
 
     @Override
     public void init() {

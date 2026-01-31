@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.model.data;
 
@@ -54,7 +54,7 @@ public class ProcessInfo implements Parcelable {
         isRepeatingCrash = in.readByte() != 0;
     }
 
-    public static final Creator<ProcessInfo> CREATOR = new Creator<ProcessInfo>() {
+    public static final Creator<ProcessInfo> CREATOR = new Creator<>() {
         @Override
         public ProcessInfo createFromParcel(Parcel in) {
             return new ProcessInfo(in);

@@ -14,13 +14,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 
 package com.sevtinge.hyperceiler.hook.module.rules.various.clipboard;
 
-import com.hchen.hooktool.HCBase;
-import com.hchen.hooktool.hook.IHook;
+import com.sevtinge.hyperceiler.hook.module.base.BaseHook;
 
 /**
  * 获取常用语的 classloader。
@@ -28,20 +27,20 @@ import com.hchen.hooktool.hook.IHook;
  *
  * @author 焕晨HChen
  */
-public class LoadInputMethodDex extends HCBase {
+public class LoadInputMethodDex extends BaseHook {
     private boolean isLoaded;
 
     @Override
     public void init() {
-        hookMethod("android.inputmethodservice.InputMethodModuleManager",
+        findAndHookMethod("android.inputmethodservice.InputMethodModuleManager",
             "loadDex",
             ClassLoader.class, String.class,
-            new IHook() {
+            new MethodHook() {
                 @Override
-                public void after() {
+                protected void after(MethodHookParam param) throws Throwable {
                     if (isLoaded) return;
 
-                    ClassLoader classLoader = (ClassLoader) getArg(0);
+                    ClassLoader classLoader = (ClassLoader) param.args[0];
                     ClipboardLimit.unlock(classLoader);
 
                     logI(TAG, "Input method classloader: " + classLoader);

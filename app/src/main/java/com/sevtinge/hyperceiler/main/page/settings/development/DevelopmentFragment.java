@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.main.page.settings.development;
 
-import static com.sevtinge.hyperceiler.hook.utils.log.LogManager.fixLSPosedLogService;
-import static com.sevtinge.hyperceiler.hook.utils.shell.ShellUtils.rootExecCmd;
+import static com.sevtinge.hyperceiler.libhook.utils.log.LogManager.fixLSPosedLogService;
+import static com.sevtinge.hyperceiler.libhook.utils.shell.ShellUtils.rootExecCmd;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +32,7 @@ import androidx.preference.Preference;
 import com.sevtinge.hyperceiler.common.utils.DialogHelper;
 import com.sevtinge.hyperceiler.core.R;
 import com.sevtinge.hyperceiler.dashboard.SettingsPreferenceFragment;
-import com.sevtinge.hyperceiler.hook.module.base.dexkit.DexKit;
+import com.sevtinge.hyperceiler.libhook.utils.hookapi.dexkit.DexKit;
 
 import fan.appcompat.app.AlertDialog;
 
@@ -103,18 +103,16 @@ public class DevelopmentFragment extends SettingsPreferenceFragment implements P
                 .setNegativeButton(android.R.string.cancel, (d, w) -> d.dismiss())
                 .create();
 
-        dialog.setOnShowListener(d -> {
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
-                String userInput = input.getText().toString().trim();
-                if (userInput.isEmpty()) {
-                    dialog.dismiss();
-                    showInDialog(callback);
-                } else {
-                    callback.onInputReceived(userInput);
-                    dialog.dismiss();
-                }
-            });
-        });
+        dialog.setOnShowListener(d -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            String userInput = input.getText().toString().trim();
+            if (userInput.isEmpty()) {
+                dialog.dismiss();
+                showInDialog(callback);
+            } else {
+                callback.onInputReceived(userInput);
+                dialog.dismiss();
+            }
+        }));
 
         dialog.show();
     }

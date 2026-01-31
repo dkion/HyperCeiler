@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.provision.activity;
 
@@ -254,7 +254,7 @@ public class ProvisionActivity extends ProvisionBaseActivity {
     }
     public static class StateMachine {
 
-        private Context mContext;
+        private final Context mContext;
 
         private State mCurrentState;
         private State mPermissionState;
@@ -504,8 +504,8 @@ public class ProvisionActivity extends ProvisionBaseActivity {
             }
         }
 
-        public class StateInfo {
-            private State mCurrent;
+        public static class StateInfo {
+            private final State mCurrent;
             private State mNext;
 
             public StateInfo(State current) {
@@ -547,9 +547,7 @@ public class ProvisionActivity extends ProvisionBaseActivity {
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
                 Log.e(TAG, String.valueOf(e));
                 return null;
-            } catch (InvocationTargetException e) {
-                throw new RuntimeException(e);
-            } catch (NoSuchMethodException e) {
+            } catch (InvocationTargetException | NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
         }

@@ -14,30 +14,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hooker;
 
 import static android.os.Looper.getMainLooper;
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.MiDeviceAppUtilsKt.isPad;
-import static com.sevtinge.hyperceiler.hook.utils.devicesdk.SystemSDKKt.isMoreSmallVersion;
+import static com.sevtinge.hyperceiler.libhook.utils.api.DeviceHelper.System.isMoreSmallVersion;
 
 import android.os.Handler;
 
-import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.SwitchPreference;
 
-import com.sevtinge.hyperceiler.dashboard.DashboardFragment;
-import com.sevtinge.hyperceiler.hook.module.base.tool.AppsTool;
-import com.sevtinge.hyperceiler.hook.utils.ThreadPoolManager;
 import com.sevtinge.hyperceiler.core.R;
+import com.sevtinge.hyperceiler.dashboard.DashboardFragment;
+import com.sevtinge.hyperceiler.libhook.utils.api.ThreadPoolManager;
+import com.sevtinge.hyperceiler.libhook.utils.hookapi.tool.AppsTool;
 
 public class VariousFragment extends DashboardFragment {
     PreferenceCategory mDefault;
     SwitchPreference mClipboard;
     SwitchPreference mClipboardClear;
-    Preference mMipad; // 平板相关功能
 
     Handler handler;
 
@@ -49,10 +46,8 @@ public class VariousFragment extends DashboardFragment {
     @Override
     public void initPrefs() {
         mDefault = findPreference("prefs_key_various_super_clipboard_key");
-        mMipad = findPreference("prefs_key_various_mipad");
         mClipboard = findPreference("prefs_key_sogou_xiaomi_clipboard");
         mClipboardClear = findPreference("prefs_key_add_clipboard_clear");
-        mMipad.setVisible(isPad());
 
         if (isMoreSmallVersion(200, 2f)) {
             setFuncHint(mClipboardClear, 2);

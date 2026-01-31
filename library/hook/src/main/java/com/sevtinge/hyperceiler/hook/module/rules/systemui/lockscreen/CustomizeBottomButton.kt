@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui.lockscreen
 
@@ -29,7 +29,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import com.sevtinge.hyperceiler.hook.R
 import com.sevtinge.hyperceiler.hook.module.base.BaseHook
-import com.sevtinge.hyperceiler.hook.module.base.tool.HookTool
 import com.sevtinge.hyperceiler.hook.module.base.tool.HookTool.MethodHook.returnConstant
 import com.sevtinge.hyperceiler.hook.module.base.tool.OtherTool
 import com.sevtinge.hyperceiler.hook.module.rules.systemui.base.api.FlashlightController
@@ -179,10 +178,10 @@ object CustomizeBottomButton : BaseHook() {
             }
         })
 
-        HookTool.findAndHookMethod(
+        findAndHookMethod(
             keyguardBottomAreaInjector,
             "updateLeftIcon",
-            object : HookTool.MethodHook() {
+            object : MethodHook() {
                 override fun after(param: MethodHookParam) {
                     leftButton =
                         param.thisObject.getObjectFieldAs<ImageView?>("mLeftButton")?.also {

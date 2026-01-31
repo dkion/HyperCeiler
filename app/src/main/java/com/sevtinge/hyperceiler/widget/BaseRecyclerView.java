@@ -14,12 +14,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.widget;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.util.AttributeSet;
 
 import androidx.annotation.NonNull;
@@ -29,7 +28,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import fan.recyclerview.card.CardDefaultItemAnimator;
 import fan.recyclerview.card.CardItemDecoration;
 import fan.recyclerview.widget.RecyclerView;
-import fan.springback.view.SpringBackLayout;
 
 public class BaseRecyclerView extends RecyclerView {
 

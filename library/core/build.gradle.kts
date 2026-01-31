@@ -7,7 +7,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        minSdk = 34
+        minSdk = 35
 
         buildConfigField("String", "APP_MODULE_ID", "\"com.sevtinge.hyperceiler\"")
     }
@@ -18,13 +18,13 @@ android {
 
     buildTypes {
         release {
-            consumerProguardFiles(libs.versions.proguard.rules.get())
+            consumerProguardFiles("proguard-rules.pro")
         }
         create("beta") {
-            consumerProguardFiles(libs.versions.proguard.rules.get())
+            consumerProguardFiles("proguard-rules.pro")
         }
         create("canary") {
-            consumerProguardFiles(libs.versions.proguard.rules.get())
+            consumerProguardFiles("proguard-rules.pro")
         }
     }
 }
@@ -36,6 +36,7 @@ java {
 }
 
 dependencies {
-    api(projects.library.hook)
+    // api(projects.library.hook)
+    api(projects.library.libhook)
     api(projects.library.provision)
 }

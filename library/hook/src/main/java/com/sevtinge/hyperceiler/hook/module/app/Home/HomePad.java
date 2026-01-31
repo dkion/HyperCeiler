@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.module.app.Home;
 
@@ -88,7 +88,7 @@ import com.sevtinge.hyperceiler.hook.module.rules.home.widget.AlwaysShowMiuiWidg
 
 import java.util.Objects;
 
-@HookBase(targetPackage = "com.miui.home", isPad = 1, targetOSVersion = 3f)
+@HookBase(targetPackage = "com.miui.home", deviceType = 1, minOSVersion = 3f)
 public class HomePad extends BaseModule {
 
     @Override

@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2024 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hook.module.rules.systemui.controlcenter
 
@@ -44,7 +44,7 @@ object OldWeather : BaseHook() {
                 val viewGroup = it.thisObject as ViewGroup
                 val context = viewGroup.context
                 val layoutParam =
-                    loadClass("androidx.constraintlayout.widget.ConstraintLayout\$LayoutParams")
+                    loadClass($$"androidx.constraintlayout.widget.ConstraintLayout$LayoutParams")
                         .getConstructor(Int::class.java, Int::class.java)
                         .newInstance(
                             ViewGroup.LayoutParams.WRAP_CONTENT,

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 
 package com.sevtinge.hyperceiler.main.page.about.controller;
@@ -102,11 +102,10 @@ public class BgEffectController implements Runnable {
         if (ViewUtils.isNightMode(context)) {
             if (Build.IS_TABLET) {
                 this.mBgEffectPainter.setType(BgEffectDataManager.DeviceType.TABLET, BgEffectDataManager.ThemeMode.DARK, this.bound);
-                return;
             } else {
                 this.mBgEffectPainter.setType(BgEffectDataManager.DeviceType.PHONE, BgEffectDataManager.ThemeMode.DARK, this.bound);
-                return;
             }
+            return;
         }
         if (Build.IS_TABLET) {
             this.mBgEffectPainter.setType(BgEffectDataManager.DeviceType.TABLET, BgEffectDataManager.ThemeMode.LIGHT, this.bound);

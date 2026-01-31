@@ -14,7 +14,7 @@
   * You should have received a copy of the GNU Affero General Public License
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  * Copyright (C) 2023-2025 HyperCeiler Contributions
+  * Copyright (C) 2023-2026 HyperCeiler Contributions
 */
 package com.sevtinge.hyperceiler.hook.utils.api
 
@@ -83,7 +83,7 @@ fun Any.field(
     fieldType: Class<*>? = null
 ): Field {
     if (fieldName.isBlank()) throw IllegalArgumentException("Field name must not be empty!")
-    var c: Class<*> = if (this is Class<*>) this else this.javaClass
+    var c: Class<*> = this as? Class<*> ?: this.javaClass
     do {
         c.declaredFields
             .filter { isStatic == it.isStatic }

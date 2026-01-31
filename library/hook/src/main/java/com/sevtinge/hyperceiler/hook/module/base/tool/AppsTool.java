@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hook.module.base.tool;
 
@@ -209,7 +209,7 @@ public class AppsTool {
             Object parser = parserCls.getDeclaredConstructor().newInstance();
             File apkPath = new File(lpparam.appInfo.sourceDir);
             if (apkPath.toString().contains("com.miui.securecenter")) {
-                XposedHelpers.findAndHookMethod(parserCls, "setMaxAspectRatio", float.class, new XC_MethodHook() {
+                findAndHookMethod(parserCls, "setMaxAspectRatio", float.class, new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                         Object arg0 = param.args[0];

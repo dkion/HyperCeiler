@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
- * Copyright (C) 2023-2025 HyperCeiler Contributions
+ * Copyright (C) 2023-2026 HyperCeiler Contributions
  */
 package com.sevtinge.hyperceiler.hooker.framework;
 
 import com.sevtinge.hyperceiler.core.R;
 import com.sevtinge.hyperceiler.dashboard.DashboardFragment;
-import com.sevtinge.hyperceiler.hook.utils.log.AndroidLogUtils;
-import com.sevtinge.hyperceiler.hook.utils.shell.ShellUtils;
+import com.sevtinge.hyperceiler.libhook.utils.log.AndroidLog;
+import com.sevtinge.hyperceiler.libhook.utils.shell.ShellUtils;
 
 import fan.preference.DropDownPreference;
 
@@ -44,7 +44,7 @@ public class VolumeSettings extends DashboardFragment {
                 String command = "settings put secure system_framework_default_volume_stream " + Integer.parseInt((String) o);
                 ShellUtils.execCommand(command, true);
             } catch (Throwable e) {
-                AndroidLogUtils.logE("VolumeSettings", "Throwable: " + e.getMessage());
+                AndroidLog.e("VolumeSettings", "Throwable: " + e.getMessage());
             }
             return true;
         });
